@@ -1,0 +1,346 @@
+{
+    "id": 47189,
+    "title": "1. The horticultural sector’s relative contribution to the regional economy in NW Rwanda will have increased significantly",
+    "indicators": [
+        {
+            "id": 138906,
+            "title": "1.1. Increased accrued incomes from horticulture (producers, other SMEs active in the value chain and exporters), gross income",
+            "description": "",
+            "period_count": 2,
+            "type": "quantitative",
+            "baseline_year": 2018,
+            "baseline_value": "0",
+            "target_value": null,
+            "score_options": [],
+            "measure": "unit",
+            "periods": [
+                {
+                    "period_id": 515062,
+                    "period_start": "2018-01-01",
+                    "period_end": "2020-12-31",
+                    "locked": true,
+                    "actual_comment": null,
+                    "actual_value": 1155777.0,
+                    "actual_numerator": null,
+                    "actual_denominator": null,
+                    "can_add_update": true,
+                    "target_value": 5000000.0,
+                    "countries": [
+                        {
+                            "iso_code": "rw"
+                        }
+                    ],
+                    "updates": [],
+                    "updates_value": 0,
+                    "updates_numerator": null,
+                    "updates_denominator": null,
+                    "updates_score_index": null,
+                    "contributors": [
+                        {
+                            "project_id": 7218,
+                            "project_title": "Hortinvest (Original)",
+                            "project_subtitle": "Investing in Horticulture Development in Rwanda",
+                            "period_id": 89386,
+                            "country": {
+                                "iso_code": "rw"
+                            },
+                            "actual_comment": [
+                                "27-10-2020: This is income from farmers and business cases. 450,000 = Garden Fresh, 134,524 = LOTEC; 68,604 = 141 farmers of demo site; 453,913 Agasaro; 47,809 = Kigali Farms;17,673 = IABM and 30,930 Rijk Zwaan/HGT",
+                                "27-10-2020: It is unlikely that impact indicators will already be achieved in 2019"
+                            ],
+                            "actual_value": 1155777.0,
+                            "actual_numerator": null,
+                            "actual_denominator": null,
+                            "target_value": 5000000.0,
+                            "score_index": null,
+                            "updates": [
+                                {
+                                    "update_id": 30459,
+                                    "status": {
+                                        "code": "A",
+                                        "name": "approved"
+                                    },
+                                    "user": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "approved_by": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "value": 1155777.0,
+                                    "numerator": null,
+                                    "denominator": null,
+                                    "text": "This is income from farmers and business cases. 450,000 = Garden Fresh, 134,524 = LOTEC; 68,604 = 141 farmers of demo site; 453,913 Agasaro; 47,809 = Kigali Farms;17,673 = IABM and 30,930 Rijk Zwaan/HGT",
+                                    "narrative": "",
+                                    "score_index": null,
+                                    "comments": [],
+                                    "disaggregations": [],
+                                    "created_at": "2020-04-29T21:34:43.248711",
+                                    "last_modified_at": "2020-10-27T10:39:16.138436"
+                                },
+                                {
+                                    "update_id": 21248,
+                                    "status": {
+                                        "code": "A",
+                                        "name": "approved"
+                                    },
+                                    "user": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "approved_by": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "value": 0.0,
+                                    "numerator": null,
+                                    "denominator": null,
+                                    "text": "It is unlikely that impact indicators will already be achieved in 2019",
+                                    "narrative": "",
+                                    "score_index": null,
+                                    "comments": [],
+                                    "disaggregations": [],
+                                    "created_at": "2019-07-26T09:10:10.111805",
+                                    "last_modified_at": "2020-10-27T10:39:16.131596"
+                                }
+                            ],
+                            "updates_value": 1155777.0,
+                            "updates_numerator": null,
+                            "updates_denominator": null,
+                            "contributors": [],
+                            "disaggregation_contributions": [],
+                            "disaggregation_targets": []
+                        }
+                    ],
+                    "disaggregation_contributions": [],
+                    "disaggregation_targets": []
+                },
+                {
+                    "period_id": 515063,
+                    "period_start": "2021-01-01",
+                    "period_end": "2021-11-23",
+                    "locked": true,
+                    "actual_comment": null,
+                    "actual_value": 0.0,
+                    "actual_numerator": null,
+                    "actual_denominator": null,
+                    "can_add_update": true,
+                    "target_value": 10500000.0,
+                    "countries": [],
+                    "updates": [],
+                    "updates_value": 0,
+                    "updates_numerator": null,
+                    "updates_denominator": null,
+                    "updates_score_index": null,
+                    "contributors": [],
+                    "disaggregation_contributions": [],
+                    "disaggregation_targets": []
+                }
+            ],
+            "disaggregation_targets": []
+        },
+        {
+            "id": 138907,
+            "title": "1.2. Number of farmholders (male/female; age < 30) that doubled their income",
+            "description": "",
+            "period_count": 2,
+            "type": "quantitative",
+            "baseline_year": 2018,
+            "baseline_value": "0",
+            "target_value": null,
+            "score_options": [],
+            "measure": "unit",
+            "periods": [
+                {
+                    "period_id": 515064,
+                    "period_start": "2018-01-01",
+                    "period_end": "2020-12-31",
+                    "locked": true,
+                    "actual_comment": null,
+                    "actual_value": 1234.0,
+                    "actual_numerator": null,
+                    "actual_denominator": null,
+                    "can_add_update": true,
+                    "target_value": 7000.0,
+                    "countries": [
+                        {
+                            "iso_code": "rw"
+                        }
+                    ],
+                    "updates": [],
+                    "updates_value": 0,
+                    "updates_numerator": null,
+                    "updates_denominator": null,
+                    "updates_score_index": null,
+                    "contributors": [
+                        {
+                            "project_id": 7218,
+                            "project_title": "Hortinvest (Original)",
+                            "project_subtitle": "Investing in Horticulture Development in Rwanda",
+                            "period_id": 128320,
+                            "country": {
+                                "iso_code": "rw"
+                            },
+                            "actual_comment": [
+                                "29-04-2020: It is unlikely that impact indicators will already be achieved in 2019"
+                            ],
+                            "actual_value": 1234.0,
+                            "actual_numerator": null,
+                            "actual_denominator": null,
+                            "target_value": 7000.0,
+                            "score_index": null,
+                            "updates": [
+                                {
+                                    "update_id": 30461,
+                                    "status": {
+                                        "code": "A",
+                                        "name": "approved"
+                                    },
+                                    "user": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "approved_by": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "value": 617.0,
+                                    "numerator": null,
+                                    "denominator": null,
+                                    "text": "",
+                                    "narrative": "",
+                                    "score_index": null,
+                                    "comments": [],
+                                    "disaggregations": [
+                                        {
+                                            "category": "Youth",
+                                            "category_id": 404,
+                                            "type": "15%",
+                                            "type_id": 923,
+                                            "value": 184.0,
+                                            "numerator": null,
+                                            "denominator": null
+                                        }
+                                    ],
+                                    "created_at": "2020-04-29T21:38:01.666049",
+                                    "last_modified_at": "2020-04-29T21:38:01.696787"
+                                },
+                                {
+                                    "update_id": 30460,
+                                    "status": {
+                                        "code": "A",
+                                        "name": "approved"
+                                    },
+                                    "user": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "approved_by": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "value": 617.0,
+                                    "numerator": null,
+                                    "denominator": null,
+                                    "text": "",
+                                    "narrative": "",
+                                    "score_index": null,
+                                    "comments": [],
+                                    "disaggregations": [
+                                        {
+                                            "category": "Youth",
+                                            "category_id": 404,
+                                            "type": "15%",
+                                            "type_id": 923,
+                                            "value": 184.0,
+                                            "numerator": null,
+                                            "denominator": null
+                                        }
+                                    ],
+                                    "created_at": "2020-04-29T21:37:34.811489",
+                                    "last_modified_at": "2020-04-29T21:38:01.679639"
+                                },
+                                {
+                                    "update_id": 21249,
+                                    "status": {
+                                        "code": "A",
+                                        "name": "approved"
+                                    },
+                                    "user": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "approved_by": {
+                                        "user_id": 44950,
+                                        "email": "valuase@gmail.com",
+                                        "name": "Uwase Valentine"
+                                    },
+                                    "value": 0.0,
+                                    "numerator": null,
+                                    "denominator": null,
+                                    "text": "It is unlikely that impact indicators will already be achieved in 2019",
+                                    "narrative": "",
+                                    "score_index": null,
+                                    "comments": [],
+                                    "disaggregations": [],
+                                    "created_at": "2019-07-26T09:12:13.999967",
+                                    "last_modified_at": "2020-04-29T21:38:01.675296"
+                                }
+                            ],
+                            "updates_value": 1234.0,
+                            "updates_numerator": null,
+                            "updates_denominator": null,
+                            "contributors": [],
+                            "disaggregation_contributions": [],
+                            "disaggregation_targets": []
+                        }
+                    ],
+                    "disaggregation_contributions": [
+                        {
+                            "category": "Youth",
+                            "category_id": 404,
+                            "type": "15%",
+                            "type_id": 923,
+                            "value": 368.0,
+                            "numerator": null,
+                            "denominator": null
+                        }
+                    ],
+                    "disaggregation_targets": []
+                },
+                {
+                    "period_id": 515065,
+                    "period_start": "2021-01-01",
+                    "period_end": "2021-11-23",
+                    "locked": true,
+                    "actual_comment": null,
+                    "actual_value": 0.0,
+                    "actual_numerator": null,
+                    "actual_denominator": null,
+                    "can_add_update": true,
+                    "target_value": 15000.0,
+                    "countries": [],
+                    "updates": [],
+                    "updates_value": 0,
+                    "updates_numerator": null,
+                    "updates_denominator": null,
+                    "updates_score_index": null,
+                    "contributors": [],
+                    "disaggregation_contributions": [],
+                    "disaggregation_targets": []
+                }
+            ],
+            "disaggregation_targets": []
+        }
+    ]
+}

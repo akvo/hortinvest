@@ -1,0 +1,223 @@
+{
+    "id": 9554,
+    "title": "HortInvest Program",
+    "subtitle": "HortInvest Programme Results Framework",
+    "results": [
+        {
+            "id": 47189,
+            "title": "1. The horticultural sector’s relative contribution to the regional economy in NW Rwanda will have increased significantly",
+            "indicator_count": 2,
+            "type": "Impact",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47190,
+            "title": "2. Improved food and nutrition security of poor households",
+            "indicator_count": 1,
+            "type": "Impact",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47191,
+            "title": "1. Increased sustainable production and supplies of horticultural produce from smallholders (M/F)",
+            "indicator_count": 4,
+            "type": "Outcome",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47192,
+            "title": "2. Increased accessibility and intake of appropriate foods",
+            "indicator_count": 3,
+            "type": "Outcome",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47193,
+            "title": "3. Increased horticulture exports from the project districts",
+            "indicator_count": 3,
+            "type": "Outcome",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47194,
+            "title": "4. An increased enabling environment for horticulture development",
+            "indicator_count": 4,
+            "type": "Outcome",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47195,
+            "title": "1.1. Trained RAB extension staff, FFS Facilitators and Farmer Promoters are able to implement improved horticultural production techniques",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47196,
+            "title": "1.2. Strengthened performance of horticultural cooperatives and farmer groups in the six target districts",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47197,
+            "title": "1.3. Horticulture SMEs are able to provide improved services related to input supplies, production and/or marketing",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47198,
+            "title": "1.4. Smallholder farmers in the six project districts know how to implement smart cultivation practices",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47199,
+            "title": "1.5. Rwandan horticulture businesses have the opportunity to network",
+            "indicator_count": 3,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47200,
+            "title": "2.1 Food & Nutrition Security",
+            "indicator_count": 3,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47201,
+            "title": "2.2. local health and agricultural workers and staff of partner organisations are able to train others on the importance of fruit and vegetable production and consumption, as part of a diverse, healthy diet",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47202,
+            "title": "2.3. Consumers are aware of the importance of fruit and vegetable consumption",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47203,
+            "title": "3.1. Awareness and increase in export development",
+            "indicator_count": 3,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47204,
+            "title": "3.2. Buyers in high-value markets are aware of the “Rwanda Fresh” promotional campaign",
+            "indicator_count": 1,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47205,
+            "title": "3.3. Rwandan horticulture companies and producers are able to qualify for certification in line with export market requirements",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47206,
+            "title": "3.4. Increased horticulture export businesses with linkages to out-grower schemes",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47207,
+            "title": "3.5. Access to finance by companies through IIF",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47208,
+            "title": "3.6. New varieties of Fruits & Vegetables produced by Rwandan exporters",
+            "indicator_count": 1,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47209,
+            "title": "4.1. National and regional capacities for supportive and enabling horticultural sector development policies are strengthened",
+            "indicator_count": 1,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47210,
+            "title": "4.2. Urgent and important horticulture sector issues are addressed and resolved through public-private collaboration",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47211,
+            "title": "4.3. Performance and capacities of public and private horticultural support services are strengthened and upgraded",
+            "indicator_count": 3,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        },
+        {
+            "id": 47212,
+            "title": "4.4. Increased level of involvement of youth and women in the horticulture sector",
+            "indicator_count": 2,
+            "type": "Output",
+            "countries": [
+                "rw"
+            ]
+        }
+    ]
+}

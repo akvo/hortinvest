@@ -1,0 +1,8 @@
+{:paths ["src/main" "resources/main"]
+ :deps {}
+ :aliases {:shadow-cljs {:extra-paths ["src/dev" "src/test" "resources/dev"]
+                         :extra-deps {org.clojure/clojurescript {:mvn/version "1.10.773"}
+                                      cljs-http/cljs-http {:mvn/version "0.1.46"}
+                                      sablono/sablono {:mvn/version "0.8.6"}
+                                      thheller/shadow-cljs {:mvn/version "2.11.11"}
+                                      binaryage/devtools {:mvn/version "1.0.2"}}}}}

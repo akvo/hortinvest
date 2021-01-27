@@ -1,0 +1,9 @@
+;; shadow-cljs configuration
+{:deps {:aliases [:shadow-cljs]}
+ :dev-http {8080 "classpath:public"}
+ :nrepl {:port 50042}
+ :builds {:main {:target :browser
+                 :output-dir "resources/main/public/js/main"
+                 :asset-path "/js/main"
+                 :modules {:main {:init-fn hortinvest.app/init
+                                  :entries [hortinvest.app]}}}}}
