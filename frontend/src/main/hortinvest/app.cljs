@@ -21,7 +21,7 @@
 (defn content [{:keys [selected-key]}]
   (case selected-key
     "impacts" [impacts]
-    "reports" [reports]
+    ;; "reports" [reports]
     [projects]))
 
 (defn main-menu []
@@ -30,14 +30,15 @@
          :onClick on-menu-change}
    [menu-item {:key "projects" :title "projects"} [:a "Projects"]]
    [menu-item {:key "impacts" :title "Impacts"} [:a "Impacts"]]
-   [menu-item {:key "reports" :title "Reports"} [:a "Reports"]]])
+   #_[menu-item {:key "reports" :title "Reports"} [:a "Reports"]]])
 
 (defn root []
-  [:div {:style {:margin-top "20px"}}
+  [:div {:class "container"
+         :style {:margin-top "20px"}}
    [row {:style {:margin-bottom "20px"}}
     [col {:offset 1 :span 2} [:h1 "HortInvest"]]
     [col {:offset 1} [main-menu]]]
-   [:br ]
+   [:br]
    [content @page-state]])
 
 (rdom/render [root] (js/document.getElementById "app"))
