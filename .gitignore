@@ -1,2 +1,4 @@
 /frontend/resources/main/public/js/main/cljs-runtime
 /frontend/.cpcache/
+/frontend/resources/main/public/js/main/main.js
+/frontend/resources/main/public/js/main/manifest.edn
