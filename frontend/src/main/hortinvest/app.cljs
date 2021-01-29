@@ -2,7 +2,6 @@
   (:require
    [hortinvest.impacts :refer [impacts]]
    [hortinvest.projects :refer [projects]]
-   [hortinvest.reports :refer [reports]]
    [reagent.core :as r]
    [reagent.dom :as rdom]
    [syn-antd.col :refer [col]]
@@ -29,8 +28,7 @@
          :defaultSelectedKeys [(:selected-key @page-state)]
          :onClick on-menu-change}
    [menu-item {:key "projects" :title "projects"} [:a "Projects"]]
-   [menu-item {:key "impacts" :title "Impacts"} [:a "Impacts"]]
-   #_[menu-item {:key "reports" :title "Reports"} [:a "Reports"]]])
+   [menu-item {:key "impacts" :title "Impacts"} [:a "Impacts"]]])
 
 (defn root []
   [:div {:class "container"
@@ -41,7 +39,5 @@
    [:br]
    [content @page-state]])
 
-(rdom/render [root] (js/document.getElementById "app"))
-
 (defn init []
-  (prn "@init"))
+  (rdom/render [root] (js/document.getElementById "app")))

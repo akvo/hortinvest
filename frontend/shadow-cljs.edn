@@ -6,4 +6,5 @@
                  :output-dir "resources/main/public/js/main"
                  :asset-path "/js/main"
                  :modules {:main {:init-fn hortinvest.app/init
-                                  :entries [hortinvest.app]}}}}}
+                                  :entries [hortinvest.app]}}
+                 :release {:compiler-options {:optimizations :advanced}}}}}

@@ -6,5 +6,4 @@
                                       org.clojure/clojurescript {:mvn/version "1.10.773"}
                                       reagent/reagent {:mvn/version "1.0.0"}
                                       syn-antd/syn-antd {:mvn/version "4.8.5"}
-                                      ;; sablono/sablono {:mvn/version "0.8.6"}
                                       thheller/shadow-cljs {:mvn/version "2.11.11"}}}}}
