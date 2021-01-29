@@ -1,9 +1,8 @@
 {:paths ["src/main" "resources/main"]
- :deps {}
+ :deps {org.clojure/clojurescript {:mvn/version "1.10.773"}
+        cljs-http/cljs-http {:mvn/version "0.1.46"}
+        reagent/reagent {:mvn/version "1.0.0"}
+        syn-antd/syn-antd {:mvn/version "4.8.5"}}
  :aliases {:shadow-cljs {:extra-paths ["src/dev" "src/test" "resources/dev"]
                          :extra-deps {binaryage/devtools {:mvn/version "1.0.2"}
-                                      cljs-http/cljs-http {:mvn/version "0.1.46"}
-                                      org.clojure/clojurescript {:mvn/version "1.10.773"}
-                                      reagent/reagent {:mvn/version "1.0.0"}
-                                      syn-antd/syn-antd {:mvn/version "4.8.5"}
                                       thheller/shadow-cljs {:mvn/version "2.11.11"}}}}}
