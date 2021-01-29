@@ -9,24 +9,24 @@
    [syn-antd.row :refer [row]]))
 
 
-(defonce page-state (r/atom {:selected-key "projects"}))
+(defonce app-state (r/atom {:main-menu-selection "projects"}))
 
-(defn on-menu-change [args]
+(defn main-menu-action [args]
   (let [{:strs [key]} (js->clj args)
-        {:keys [selected-key]} @page-state]
-    (when (not (= key selected-key))
-      (swap! page-state assoc :selected-key key))))
+        {:keys [main-menu-selection]} @app-state]
+    (when (not (= key main-menu-selection))
+      (swap! app-state assoc :main-menu-selection key))))
 
-(defn content [{:keys [selected-key]}]
-  (case selected-key
-    "impacts" [impacts]
-    ;; "reports" [reports]
-    [projects]))
+(defn content [app-state]
+  (let [{:keys [main-menu-selection]} @app-state]
+    (case main-menu-selection
+      "impacts" [impacts]
+      [projects])))
 
-(defn main-menu []
+(defn main-menu [app-state]
   [menu {:mode "horizontal"
-         :defaultSelectedKeys [(:selected-key @page-state)]
-         :onClick on-menu-change}
+         :defaultSelectedKeys [(:main-menu-selection @app-state)]
+         :onClick main-menu-action}
    [menu-item {:key "projects" :title "projects"} [:a "Projects"]]
    [menu-item {:key "impacts" :title "Impacts"} [:a "Impacts"]]])
 
@@ -35,9 +35,9 @@
          :style {:margin-top "20px"}}
    [row {:style {:margin-bottom "20px"}}
     [col {:offset 1 :span 2} [:h1 "HortInvest"]]
-    [col {:offset 1} [main-menu]]]
+    [col {:offset 1} [main-menu app-state]]]
    [:br]
-   [content @page-state]])
+   [content app-state]])
 
 (defn init []
   (rdom/render [root] (js/document.getElementById "app")))

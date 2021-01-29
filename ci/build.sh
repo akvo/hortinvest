@@ -2,7 +2,7 @@
 
 set -eux
 
-IMAGE_NAME="akvo/cljs-dev:lo"
+IMAGE_NAME="akvo/cljs-dev:local"
 
 cd frontend/
 docker build -t $IMAGE_NAME .
