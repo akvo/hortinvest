@@ -3,12 +3,9 @@
    [goog.string :as gstring]
    [goog.string.format]
    [syn-antd.col :refer [col]]
+   [syn-antd.menu :refer [menu menu-item]]
    [syn-antd.row :refer [row]]))
 
-(def dashboard-config
-  {:id "60117663-3feb-4b48-a44a-a02b6961a9bc"
-   :height "4970"
-   :src "https://hortinvest.akvolumen.org/s/2X0tZojm71g"})
 
 (defn iframe-html [{:keys [height src]}]
   (gstring/format "<iframe width='100%' height='%spx' src='%s' frameborder='0' allow='encrypted-media'></iframe>"
@@ -18,16 +15,27 @@
 (defn iframe [config]
   [:div {:dangerouslySetInnerHTML {:__html (iframe-html config)}}])
 
-(defn projects []
+
+(defn projects-menu [app-state dashboard-config]
+  (reduce (fn [menu {:keys [id title]}]
+            (conj menu
+                  [menu-item {:key id :title id} [:a title]]))
+          [menu {:mode "horizontal"
+                 :defaultSelectedKeys [(:projects-menu-selection @app-state)]
+                 :onClick (fn [e]
+                            (let [{:strs [key]} (js->clj e)]
+                              (when (not (= key (:projects-menu-selection @app-state)))
+                                (swap! app-state assoc :projects-menu-selection key))))}]
+          dashboard-config))
+
+(defn projects [app-state dashboard-config]
   [row
    [col {:span 24}
-    [:h4 "Projects"]
-    [iframe dashboard-config]]])
+    [projects-menu app-state dashboard-config]
+    [iframe (first (filter #(= (:id %) (:projects-menu-selection @app-state))
+                           dashboard-config))]]])
 
 
 (comment
-
-  ;; [:div {:dangerouslySetInnerHTML {:__html "<iframe width='100%' height='4970px' src='https://hortinvest.akvolumen.org/s/2X0tZojm71g' frameborder='0' allow='encrypted-media'></iframe>"}}]
-  ;; <iframe width="100%" height="1000px" src="https://hortinvest.akvolumen.org/s/2X0tZojm71g" frameborder="0" allow="encrypted-media"></iframe>
 
   )

@@ -8,8 +8,17 @@
    [syn-antd.menu :refer [menu menu-item]]
    [syn-antd.row :refer [row]]))
 
+(def dashboard-config [{:id "60117663-3feb-4b48-a44a-a02b6961a9bc"
+                        :title "Fruit tree & seed distribution"
+                        :height "4970"
+                        :src "https://hortinvest.akvolumen.org/s/2X0tZojm71g"}
+                       {:id "600eec0a-dd6e-46ae-a8d4-53b5fc3ad1a4"
+                        :title "Business cases"
+                        :height "6620"
+                        :src "https://hortinvest.akvolumen.org/s/534M4nFv6TE"}])
 
-(defonce app-state (r/atom {:main-menu-selection "projects"}))
+(defonce app-state (r/atom {:main-menu-selection "projects"
+                            :projects-menu-selection (-> dashboard-config first :id)}))
 
 (defn main-menu-action [args]
   (let [{:strs [key]} (js->clj args)
@@ -21,7 +30,7 @@
   (let [{:keys [main-menu-selection]} @app-state]
     (case main-menu-selection
       "impacts" [impacts]
-      [projects])))
+      [projects app-state dashboard-config])))
 
 (defn main-menu [app-state]
   [menu {:mode "horizontal"
