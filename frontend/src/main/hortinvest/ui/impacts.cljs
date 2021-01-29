@@ -1,4 +1,4 @@
-(ns hortinvest.impacts
+(ns hortinvest.ui.impacts
   (:require
    [syn-antd.col :refer [col]]
    [syn-antd.progress :refer [progress]]

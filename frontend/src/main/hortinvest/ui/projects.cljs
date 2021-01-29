@@ -1,4 +1,4 @@
-(ns hortinvest.projects
+(ns hortinvest.ui.projects
   (:require
    [goog.string :as gstring]
    [goog.string.format]
@@ -16,9 +16,6 @@
 (defn iframe [config]
   [:div {:dangerouslySetInnerHTML {:__html (iframe-html config)}}])
 
-
-
-
 (defn projects-menu [app-state dashboard-config]
   (reduce (fn [menu {:keys [id title]}]
             (conj menu
@@ -34,8 +31,3 @@
     [projects-menu app-state dashboard-config]
     [iframe (first (filter #(= (:id %) (:projects-menu-selection @app-state))
                            dashboard-config))]]])
-
-
-(comment
-
-  )
