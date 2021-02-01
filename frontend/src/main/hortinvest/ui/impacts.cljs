@@ -1,26 +1,12 @@
 (ns hortinvest.ui.impacts
-  (:require-macros [cljs.core.async.macros :refer [go]])
   (:require
-   [reagent.core :as r]
-   [reagent.dom :as rdom]
-   [cljs-http.client :as http]
-   [cljs.core.async :refer [<!]]
+   [hortinvest.ui.impacts-data :as data]
    [syn-antd.col :refer [col]]
    [syn-antd.progress :refer [progress]]
    [syn-antd.row :refer [row]]))
 
-(def rsr-data (r/atom []))
-
 (defn load-projects []
-  (go (let [response (<! (http/get "./data.json"
-                                   {:with-credentials? false}))]
-        (swap! rsr-data (fn [_] (:body response))))))
-
-(defn project-type [p]
-  (condp = (:type p)
-    "3" "impact"
-    "2" "outcome"
-    "1" "output"))
+  (data/load))
 
 (defn indicator-periods [i]
   (map-indexed
@@ -50,7 +36,7 @@
      )
    (:periods i)))
 
-(defn project-indicators [p]
+(defn impact-indicators [impact]
   (map-indexed
    (fn [item-id i]
      [:div {:key (str "indicator-div-" item-id)}
@@ -75,21 +61,19 @@
       [:h4 {:class (project-type p)} (:title i)]
       #_(indicator-periods i)
       ])
-   (:indicators p)))
+   (:indicators impact)))
 
-(defn projects [projects-col]
+(defn show-impacts [impacts]
   (map-indexed
-   (fn [item-id project]
-     [:div {:key (str (str "project-div-" item-id))}
+   (fn [item-id impact]
+     [:div {:key (str (str "impact-div-" item-id))}
       [row
-       [col {:span 24 :key (str "project-" item-id)}
-        [:h3 (:title project)]]]
-      (project-indicators project)
-      (when (:outputs project)
-        (projects (:outputs project)))
-      ])
-   projects-col))
+       [col {:span 24 :key (str "impact-" item-id)}
+        [:h3 (:title impact)]]]
+      (impact-indicators impact)
+      (when (:outputs impact)
+        (show-impacts (:outputs impact)))])
+   impacts))
 
 (defn impacts []
-  [:div
-   (projects @rsr-data)])
+  [:div (show-impacts @data/db)])
