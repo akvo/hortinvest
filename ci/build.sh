@@ -10,4 +10,4 @@ image_prefix="eu.gcr.io/akvo-lumen/hortinvest"
 cd frontend
 docker build \
        --tag "${image_prefix}/frontend:latest" \
-       --tag "${image_prefix}/frontend:${CI_COMMIT}"
+       --tag "${image_prefix}/frontend:${CI_COMMIT}" .
