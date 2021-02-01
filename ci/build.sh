@@ -8,6 +8,9 @@ set -exuo pipefail
 image_prefix="eu.gcr.io/akvo-lumen/hortinvest"
 
 cd frontend
+log Creating Production Frontend image
 docker build \
        --tag "${image_prefix}/frontend:latest" \
        --tag "${image_prefix}/frontend:${CI_COMMIT}" .
+
+log Done

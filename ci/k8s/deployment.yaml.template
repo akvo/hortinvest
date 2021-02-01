@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hortinvest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hortinvest
+  template:
+    metadata:
+      labels:
+        app: hortinvest
+        run: hortinvest
+  spec:
+    containers:
+      - name: hortinvest-frontend
+        image: eu.gcr.io/akvo-lumen/hortinvest/frontend:${CI_COMMIT}
+        ports:
+          - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "32Mi"
+          limits:
+            cpu: "200m"
+            memory: "64Mi"

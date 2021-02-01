@@ -11,3 +11,4 @@ spec:
       name: http
   selector:
     run: hortinvest
+    engine: k2

@@ -5,15 +5,21 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 global_job_config:
+  secrets:
+    - name: GCP
+    - name: docker-hub-credentials
   prologue:
     commands:
       - export CI_COMMIT="${SEMAPHORE_GIT_SHA:0:7}"
       - export CI_TAG="${SEMAPHORE_GIT_TAG_NAME}"
 blocks:
-  - name: Build
+  - name: "Build and test"
+    skip:
+      when: "tag =~ '.*'"
     task:
       jobs:
         - name: docker build
           commands:
             - checkout
             - ./ci/build.sh
+            - ./ci/deploy.sh
