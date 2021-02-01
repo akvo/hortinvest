@@ -26,9 +26,9 @@
   (map-indexed
    (fn [item-id period]
      #_[:li {:name (str "period-" item-id) :key (str "period-" item-id)}
-      "Actual value: " (:actual_value period) "  ... "
+        "Actual value: " (:actual_value period) "  ... "
       " Target value: " (:target_value period)]
-     [row {:gutter 20}
+     [row {:gutter 20 :key (str "period-" item-id)}
      [col {:span 8} [:p "Number of farmholders (male/female; age < 30) that doubled their income"]]
      [col {:span 4}
       [progress {:percent 0
@@ -53,8 +53,8 @@
 (defn project-indicators [p]
   (map-indexed
    (fn [item-id i]
-     [:div
-      [row {:gutter 20}
+     [:div {:key (str "indicator-div-" item-id)}
+      [row {:gutter 20 :key (str "indicator-" item-id)}
        [col {:span 8}
         [:p (:title i)]]
        [col {:span 4}
@@ -80,9 +80,9 @@
 (defn projects [projects-col]
   (map-indexed
    (fn [item-id project]
-     [:div
+     [:div {:key (str (str "project-div-" item-id))}
       [row
-       [col {:span 24}
+       [col {:span 24 :key (str "project-" item-id)}
         [:h3 (:title project)]]]
       (project-indicators project)
       (when (:outputs project)
