@@ -1,9 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -eux
+set -eu
 
-IMAGE_NAME="akvo/cljs-dev:local"
+IMAGE_NAME="akvo/hortinvest:latest"
 
 cd frontend/
 docker build -t $IMAGE_NAME .
-docker run --rm -ti -v "$(pwd)":/app $IMAGE_NAME shadow-cljs release main

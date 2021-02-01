@@ -1,5 +1,5 @@
 ;; shadow-cljs configuration
-{:deps {:aliases [:shadow-cljs]}
+{:deps {:aliases [:cljs :shadow-cljs]}
  :dev-http {8080 "classpath:public"}
  :nrepl {:port 50042}
  :builds {:main {:target :browser

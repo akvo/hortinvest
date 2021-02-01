@@ -1,6 +1,5 @@
 # HortInvest Dashboard
 
-
 ## development environment
 
 ### dev webserver (mock rsr api)
@@ -11,6 +10,7 @@ using https://www.npmjs.com/package/http-server
 
 
 ### frontend
+
 ``` bash
 cd frontend
 npm install
@@ -22,3 +22,18 @@ shadow-cljs - nREPL server started on port 50042
 ```
 
 Browse to http://localhost:8080/
+
+## Release
+
+Build and run production image
+``` bash
+./ci/build.sh
+./ci/run.sh
+```
+
+http://localhost:8080
+
+Stop docker container
+``` bash
+./ci/stop.sh
+```
