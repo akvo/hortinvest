@@ -2,6 +2,7 @@
 
 ``` bash
 cd frontend
+npm install
 npx shadow-cljs watch main
 ...
 shadow-cljs - HTTP server available at http://localhost:8080
