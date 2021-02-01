@@ -1,17 +1,18 @@
 (ns hortinvest.ui
   (:require
-   [hortinvest.ui.impacts :refer [impacts]]
+   [hortinvest.ui.impacts :as i]
    [hortinvest.ui.projects :refer [projects]]
    [hortinvest.util :as util]
    [syn-antd.col :refer [col]]
    [syn-antd.menu :refer [menu menu-item]]
    [syn-antd.row :refer [row]]))
 
-
 (defn content [app-state dashboard-config]
   (let [{:keys [main-menu-selection]} @app-state]
     (case main-menu-selection
-      "impacts" [impacts]
+      "impacts" (do
+                  (i/load-projects)
+                  [i/impacts])
       [projects app-state dashboard-config])))
 
 (defn main-menu [app-state]
