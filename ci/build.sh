@@ -12,5 +12,3 @@ log Creating Production Frontend image
 docker build \
        --tag "${image_prefix}/frontend:latest" \
        --tag "${image_prefix}/frontend:${CI_COMMIT}" .
-
-log Done
