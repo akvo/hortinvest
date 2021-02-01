@@ -19,7 +19,7 @@
 (def project-id 7218)
 
 (defn api [v s]
-  (str api-domain "/v/" v "/" s))
+  (str api-domain "/v" v "/" s))
 
 (def db (r/atom []))
 
