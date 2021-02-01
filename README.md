@@ -1,5 +1,16 @@
 # HortInvest Dashboard
 
+
+## development environment
+
+### dev webserver (mock rsr api)
+using https://www.npmjs.com/package/http-server
+1. install it https://www.npmjs.com/package/http-server#installation
+2. go to the static json folder
+3. `http-server -p 50000 --cors`
+
+
+### frontend
 ``` bash
 cd frontend
 npm install
