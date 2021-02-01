@@ -15,7 +15,7 @@
         "Actual value: " (:actual_value period) "  ... "
       " Target value: " (:target_value period)]
      [row {:gutter 20 :key (str "period-" item-id)}
-     [col {:span 8} [:p "Number of farmholders (male/female; age < 30) that doubled their income"]]
+     [col {:span 8} [:p (:indicator_unicode period)]]
      [col {:span 4}
       [progress {:percent 0
                  :type "circle"
