@@ -61,7 +61,7 @@
                                    [:div
                                       [:div {:style {:fontSize "11px"}}(str (:period_start p) " - " (:period_end p))]
                                       [:div (str (period-value (:actual_value p)) " / " (period-value (:target_value p)))]
-                                      [progress {:percent percent :size "small"}]]])))
+                                      [progress {:percent percent :size "small" :style {:padding "8px"}}]]])))
                       r periods )]
       (if (pos? empty-cols)
         (into res (vec (repeat empty-cols [col {:span 4} "."])))
@@ -72,7 +72,7 @@
   (map-indexed
    (fn [item-id i]
      [slist/list-item {:key (str (str "indicator-div-" item-id)) :style {:width "100%"}}
-      (into [row {:style {:width "100%"}}] (periods [[col {:span 8} (:title i)]] i))])
+      (into [row {:style {:width "100%"}}] (periods [[col {:span 8 :style {:padding-right "15px"}} (:title i) ]] i))])
    (:indicators impact)))
 
 (defn impacts
