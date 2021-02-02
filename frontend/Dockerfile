@@ -2,7 +2,6 @@ FROM node:alpine AS cljs-builder
 ENV CLOJURE_VER=1.10.2.774
 WORKDIR /app
 COPY home_deps.edn /root/.clojure/deps.edn
-COPY ~/.m2 /root/.m2
 COPY . /app
 RUN set eux; \
         apk add --update --no-cache openjdk8 openssl bash curl && \
