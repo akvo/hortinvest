@@ -12,6 +12,7 @@ spec:
       labels:
         app: hortinvest
         run: hortinvest
+        hortinvest-version: "${CI_COMMIT}"
     spec:
         containers:
         - name: hortinvest-frontend

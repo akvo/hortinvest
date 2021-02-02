@@ -25,6 +25,13 @@ Browse to http://localhost:8080/
 
 ## Release
 
+### Test
+Push to the main branch will deploy to the test environment.
+
+### Production
+...
+
+
 Build and run production image
 ``` bash
 ./ci/build.sh
