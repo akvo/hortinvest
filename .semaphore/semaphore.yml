@@ -21,10 +21,22 @@ blocks:
     skip:
       when: "tag =~ '.*'"
     task:
+      prologue:
+        commands:
+          - checkout
+          - cache restore "m2-$(checksum frontend/deps.edn)-$(checksum frontend/home_deps.edn)"
+          - cache restore "m2-$(checksum frontend/deps.edn)-$(checksum frontend/home_deps.edn)"
+          - cache restore "npm-$(checksum frontend/package.json)"
+          - cache restore "node-modules-$(checksum frontend/package.json)"
+      epilogue:
+        commands:
+          - cache store "m2-$(checksum frontend/deps.edn)-$(checksum frontend/home_deps.edn)" "$HOME/.m2"
+          - cache store "m2-$(checksum frontend/deps.edn)-$(checksum frontend/home_deps.edn)" "frontend/.cpcache"
+          - cache store "npm-$(checksum frontend/package.json)" "$HOME/.npm"
+          - cache store "node-modules-$(checksum frontend/package.json)" "frontend/node_modules"
       jobs:
         - name: docker build
           commands:
-            - checkout
             - ./ci/build.sh
             - ./ci/deploy.sh
   - name: "Promote to production"
