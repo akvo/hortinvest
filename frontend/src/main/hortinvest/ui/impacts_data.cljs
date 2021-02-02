@@ -41,12 +41,12 @@
 (defn parse-projects [projects indicators-parsed]
   (mapv
    (fn [p] (assoc p :indicators (vec (filter (fn [i](= (:id p) (:result i)))  indicators-parsed))))
-   (:results projects)))
+   projects))
 
 (defn parse-indicators [indicators periods]
   (mapv
-   (fn [i] (assoc i :periods (vec (filter (fn [ip](= (:indicator ip) (:id i))) (:results periods)))))
-   (:results indicators)))
+   (fn [i] (assoc i :periods (vec (filter (fn [ip](= (:indicator ip) (:id i))) periods))))
+   indicators))
 
 (defn outcome-level [s]
   ;; TODO: should we throw an exception here?
@@ -57,14 +57,21 @@
 ;;  (assert (= 1 (outcome-level "1.3.4 Trained RAB 88989")))
 ;;  (assert (= 5 (outcome-level "5.3.4 Trained RAB 88989")))
 
+(defn load-rec [url]
+  (go (let [c (http/get url {:with-credentials? false})
+            b (:body (<! c))
+            results (:results b)]
+        (if (:next b)
+          (into results (<! (load-rec (:next b))))
+          results))))
 (defn load []
-  (go (let [periods-chan (http/get indicator-periods-url {:with-credentials? false})
-            indicators-chan (http/get indicators-url {:with-credentials? false})
-            projects-chan (http/get projects-url {:with-credentials? false})
-            periods (:body (<! periods-chan))
-            indicators (:body (<! indicators-chan))
+  (go (let [periods-chan (load-rec indicator-periods-url)
+            indicators-chan (load-rec indicators-url)
+            projects-chan (load-rec projects-url)
+            periods (<! periods-chan)
+            indicators (<! indicators-chan)
             parsed-indicators (parse-indicators indicators periods)
-            projects-parsed (parse-projects (:body (<! projects-chan)) parsed-indicators)
+            projects-parsed (parse-projects (<! projects-chan) parsed-indicators)
             projects-by-type (group-by :type  projects-parsed)
             indicators* (get projects-by-type "3")
             outputs (->> (get projects-by-type "1")
