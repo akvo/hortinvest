@@ -10,7 +10,7 @@
 (defn content [app-state dashboard-config]
   (let [{:keys [main-menu-selection]} @app-state]
     (case main-menu-selection
-      "impacts" (do
+      "impact" (do
                   (i/load-projects)
                   [i/impacts])
       [projects app-state dashboard-config])))
@@ -20,7 +20,7 @@
          :defaultSelectedKeys [(:main-menu-selection @app-state)]
          :onClick #(util/menu-change app-state :main-menu-selection %)}
    [menu-item {:key "projects" :title "projects"} [:a "Projects"]]
-   [menu-item {:key "impacts" :title "Impacts"} [:a "Impacts"]]])
+   [menu-item {:key "impact" :title "Impacts"} [:a "Impact"]]])
 
 (defn root [app-state dashboard-config]
   [:div {:class "container"
