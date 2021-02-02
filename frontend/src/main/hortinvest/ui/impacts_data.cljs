@@ -58,10 +58,13 @@
 ;;  (assert (= 5 (outcome-level "5.3.4 Trained RAB 88989")))
 
 (defn load []
-  (go (let [periods (:body (<! (http/get indicator-periods-url {:with-credentials? false})))
-            indicators (:body (<! (http/get indicators-url {:with-credentials? false})))
-            projects (:body (<! (http/get projects-url {:with-credentials? false})))
-            projects-parsed (parse-projects projects (parse-indicators indicators periods))
+  (go (let [periods-chan (http/get indicator-periods-url {:with-credentials? false})
+            indicators-chan (http/get indicators-url {:with-credentials? false})
+            projects-chan (http/get projects-url {:with-credentials? false})
+            periods (:body (<! periods-chan))
+            indicators (:body (<! indicators-chan))
+            parsed-indicators (parse-indicators indicators periods)
+            projects-parsed (parse-projects (:body (<! projects-chan)) parsed-indicators)
             projects-by-type (group-by :type  projects-parsed)
             indicators* (get projects-by-type "3")
             outputs (->> (get projects-by-type "1")
