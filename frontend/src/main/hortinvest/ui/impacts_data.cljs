@@ -14,7 +14,9 @@
 
 (def development? (includes? host "localhost"))
 
-(def api-domain "https://rsr.akvo.org/rest")
+(def api-domain (if (includes? host "akvotest")
+                  "https://rsr.test.akvo.org/rest"
+                  "https://rsr.akvo.org/rest"))
 
 (def project-id 7218)
 
