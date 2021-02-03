@@ -7,4 +7,5 @@
                  :asset-path "/js/main"
                  :modules {:main {:init-fn hortinvest.app/init
                                   :entries [hortinvest.app]}}
+                 :devtools   {:after-load hortinvest.app/init}
                  :release {:compiler-options {:optimizations :advanced}}}}}
