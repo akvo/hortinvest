@@ -21,10 +21,12 @@ blocks:
     skip:
       when: "tag =~ '.*'"
     task:
+      prologue:
+        commands:
+          - checkout
       jobs:
         - name: docker build
           commands:
-            - checkout
             - ./ci/build.sh
             - ./ci/deploy.sh
   - name: "Promote to production"
