@@ -28,7 +28,6 @@
    [header-menu app-state]])
 
 (defn content [app-state]
-  (.scrollTo js/window 0 0)
   [layout-content {:class "site-layout"
                    :style {:padding "0 50px"
                            :marginTop 64}}
