@@ -1,6 +1,6 @@
 (ns hortinvest.util)
 
-(defn menu-change [app-state menu-key event]
-  (let [{:strs [key]} (js->clj event)]
-    (when (not (= key (get @app-state menu-key)))
-      (swap! app-state assoc menu-key key))))
+(defn menu-change [app-state event]
+  (let [{:strs [keyPath]} (js->clj event)]
+    (when (not= keyPath (:current-page @app-state))
+      (swap! app-state assoc :current-page keyPath))))

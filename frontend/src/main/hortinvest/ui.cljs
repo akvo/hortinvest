@@ -3,30 +3,44 @@
    [hortinvest.ui.impacts :as i]
    [hortinvest.ui.projects :refer [projects]]
    [hortinvest.util :as util]
-   [syn-antd.col :refer [col]]
-   [syn-antd.menu :refer [menu menu-item]]
-   [syn-antd.row :refer [row]]))
+   [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
+   [syn-antd.layout :refer [layout layout-header layout-content]]))
 
-(defn content [app-state dashboard-config]
-  (let [{:keys [main-menu-selection]} @app-state]
-    (case main-menu-selection
-      "impact" (do
+
+(defn header-menu [app-state]
+  [menu {:theme "dark"
+         :mode "horizontal"
+         :defaultSelectedKeys (-> @app-state :current-page first)
+         :onClick #(util/menu-change app-state %)}
+   (reduce (fn [menu {:keys [id title]}]
+             (conj menu
+                   [menu-item {:key id} title]))
+           [menu-sub-menu {:key "projects" :title "Projects"}]
+           (-> @app-state :projects :config))
+   [menu-item {:key "results"} "Results"]])
+
+(defn header [app-state]
+  [layout-header
+   {:style {:position "fixed"
+            :zIndex 1
+            :width "100%"}}
+   [:div {:class "logo"} [:h1 "Hortinvest"]]
+   [header-menu app-state]])
+
+(defn content [app-state]
+  [layout-content {:class "site-layout"
+                   :style {:padding "0 50px"
+                           :marginTop 64}}
+   [:div {:class "site-layout-background"
+          :style {:padding 24
+                  :minHeight 380}}
+    (case (-> @app-state :current-page last)
+      "results" (do
                   (i/load-projects)
                   [i/impacts])
-      [projects app-state dashboard-config])))
+      (projects app-state))]])
 
-(defn main-menu [app-state]
-  [menu {:mode "horizontal"
-         :defaultSelectedKeys [(:main-menu-selection @app-state)]
-         :onClick #(util/menu-change app-state :main-menu-selection %)}
-   [menu-item {:key "projects" :title "projects"} [:a "Projects"]]
-   [menu-item {:key "impact" :title "Impacts"} [:a "Impact"]]])
-
-(defn root [app-state dashboard-config]
-  [:div {:class "container"
-         :style {:margin-top "20px"}}
-   [row {:style {:margin-bottom "20px"}}
-    [col {:offset 1 :span 2} [:h1 "HortInvest"]]
-    [col {:offset 1} [main-menu app-state]]]
-   [:br]
-   [content app-state dashboard-config]])
+(defn root [app-state]
+  [layout
+   [header app-state]
+   [content app-state]])
