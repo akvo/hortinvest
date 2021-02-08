@@ -1,7 +1,7 @@
 (ns hortinvest.ui
   (:require
-   [hortinvest.ui.impacts :as i]
    [hortinvest.ui.projects :refer [projects]]
+   [hortinvest.ui.results :refer [results]]
    [hortinvest.util :as util]
    [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
    [syn-antd.layout :refer [layout layout-header layout-content]]))
@@ -17,7 +17,9 @@
                    [menu-item {:key id} title]))
            [menu-sub-menu {:key "projects" :title "Projects"}]
            (-> @app-state :projects :config))
-   [menu-item {:key "results"} "Results"]])
+   [menu-sub-menu {:key "results" :title "Results"}
+    [menu-item {:key "impacts"} "Impacts"]
+    [menu-item {:key "outcomes"} "Outcomes"]]])
 
 (defn header [app-state]
   [layout-header
@@ -35,9 +37,7 @@
           :style {:padding 24
                   :minHeight 380}}
     (case (-> @app-state :current-page last)
-      "results" (do
-                  (i/load-projects)
-                  [i/impacts])
+      "results" (results app-state)
       (projects app-state))]])
 
 (defn root [app-state]
