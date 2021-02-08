@@ -12,7 +12,6 @@ RUN set eux; \
         mkdir -p release/js/main/ && \
         cp /app/resources/main/public/index.html ./release && \
         cp /app/resources/main/public/style.css ./release && \
-        cp /app/resources/main/public/jsons/* ./release/jsons/ && \
         cp /app/resources/main/public/js/main/main.js ./release/js/main && \
         cp /app/resources/main/public/js/main/manifest.edn ./release/js/main
 
