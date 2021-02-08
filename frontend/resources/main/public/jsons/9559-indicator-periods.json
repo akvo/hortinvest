@@ -1,0 +1,704 @@
+{
+    "results": [
+        {
+            "indicator": 139414,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139415,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139416,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139417,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139427,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": ""
+        },
+        {
+            "indicator": 139428,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139429,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139430,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "6"
+        },
+        {
+            "indicator": 139431,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "930"
+        },
+        {
+            "indicator": 139432,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139434,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "6"
+        },
+        {
+            "indicator": 139435,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "160"
+        },
+        {
+            "indicator": 139436,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "3"
+        },
+        {
+            "indicator": 139437,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139438,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139442,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139443,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139446,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139447,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139451,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139453,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139455,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139457,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139459,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139463,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139464,
+            "period_end": "2018-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139419,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "12000"
+        },
+        {
+            "indicator": 139420,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139421,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139422,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139423,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139425,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": ""
+        },
+        {
+            "indicator": 139426,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": ""
+        },
+        {
+            "indicator": 139433,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "2"
+        },
+        {
+            "indicator": 139439,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "75"
+        },
+        {
+            "indicator": 139440,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "1500"
+        },
+        {
+            "indicator": 139441,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "1000"
+        },
+        {
+            "indicator": 139444,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "50"
+        },
+        {
+            "indicator": 139445,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "30000"
+        },
+        {
+            "indicator": 139448,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139449,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139450,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139452,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139454,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139456,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139458,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139460,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139461,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139462,
+            "period_end": "2019-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139411,
+            "period_end": "2020-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "5000000"
+        },
+        {
+            "indicator": 139412,
+            "period_end": "2020-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "1750"
+        },
+        {
+            "indicator": 139424,
+            "period_end": "2020-12-31",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139413,
+            "period_end": "2021-11-23",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "60"
+        },
+        {
+            "indicator": 139418,
+            "period_end": "2021-11-23",
+            "period_start": "2018-01-01",
+            "actual_value": "",
+            "target_value": "50"
+        },
+        {
+            "indicator": 139434,
+            "period_end": "2019-12-30",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "10"
+        },
+        {
+            "indicator": 139414,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "6000"
+        },
+        {
+            "indicator": 139415,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "10"
+        },
+        {
+            "indicator": 139416,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "250"
+        },
+        {
+            "indicator": 139417,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139427,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": ""
+        },
+        {
+            "indicator": 139428,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139429,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139430,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "11"
+        },
+        {
+            "indicator": 139431,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "695"
+        },
+        {
+            "indicator": 139432,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "10"
+        },
+        {
+            "indicator": 139435,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "8500"
+        },
+        {
+            "indicator": 139436,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "10"
+        },
+        {
+            "indicator": 139442,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "20"
+        },
+        {
+            "indicator": 139443,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139446,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139447,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139451,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139453,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139455,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139457,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139459,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139463,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139464,
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139417,
+            "period_end": "2020-12-17",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "1750"
+        },
+        {
+            "indicator": 139415,
+            "period_end": "2020-12-30",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "20"
+        },
+        {
+            "indicator": 139416,
+            "period_end": "2020-12-30",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "100"
+        },
+        {
+            "indicator": 139419,
+            "period_end": "2020-12-30",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "6000"
+        },
+        {
+            "indicator": 139420,
+            "period_end": "2020-12-30",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "50000"
+        },
+        {
+            "indicator": 139414,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "3250"
+        },
+        {
+            "indicator": 139421,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139422,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139423,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "0"
+        },
+        {
+            "indicator": 139425,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": ""
+        },
+        {
+            "indicator": 139426,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": ""
+        },
+        {
+            "indicator": 139427,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": ""
+        },
+        {
+            "indicator": 139428,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139429,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139430,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "40"
+        },
+        {
+            "indicator": 139431,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "750"
+        },
+        {
+            "indicator": 139432,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "4"
+        },
+        {
+            "indicator": 139433,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "1"
+        },
+        {
+            "indicator": 139434,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "8"
+        },
+        {
+            "indicator": 139435,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "1500"
+        },
+        {
+            "indicator": 139436,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "5"
+        },
+        {
+            "indicator": 139439,
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "actual_value": "",
+            "target_value": "75"
+        }
+    ]
+}
