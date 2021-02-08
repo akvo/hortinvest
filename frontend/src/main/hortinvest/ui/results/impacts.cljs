@@ -1,5 +1,6 @@
 (ns hortinvest.ui.results.impacts
   (:require
+   [goog.string :as gstring]
    [reagent.core :as r]
    [syn-antd.col :refer [col]]
    [syn-antd.progress :refer [progress]]
@@ -63,6 +64,21 @@
                                        :target_value 150
                                        :actual_value 100}]}]}]})
 
+(defn dot
+  [{:keys [showInfo percent] :or {showInfo true
+                                  percent 0} :as opts}]
+  [:<>
+   [typography-text
+    (merge (cond
+             (>= percent 100) {:type "success"}
+             (< percent 33) {:type "secondary"})
+           opts)
+    (gstring/unescapeEntities "&#9679;")]
+   (when showInfo
+     [typography-text {:type "secondary"
+                       :style {:margin-left 8}}
+      (str percent "%")])])
+
 (defn periods-header [periods]
   (reduce (fn [row {:keys [end start]}]
             (conj row
@@ -77,21 +93,10 @@
     [typography-text actual_value]
     [:br]
     [typography-text target_value]]
-   [col {:span 1}
-    [progress {:type "circle"
-               :percent 50
-               :width 20
-               :showInfo false}]
-    ]
-   [col {:span 1}]
-   ])
-
-;; (defn indicator-ui [{:keys [title periods]}]
-;;   (reduce (fn [m p]
-;;             (conj m (period-ui p))
-;;             )
-;;           [row [col {:span 12}]]
-;;           periods))
+   [col {:span 1
+         :style {:margin-top 12}}
+    (dot {:percent 40})]
+   [col {:span 1}]])
 
 (defn indicator-ui [{:keys [title periods]}]
   [row {:style {:margin-bottom 20} } [col {:span 12} title]
