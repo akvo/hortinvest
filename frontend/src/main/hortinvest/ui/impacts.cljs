@@ -7,9 +7,12 @@
    [syn-antd.card :refer  [card]]
    [syn-antd.col :refer [col]]
    [syn-antd.list :as slist]
+   [syn-antd.checkbox :as checkbox]
    [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
    [syn-antd.progress :refer [progress]]
    [syn-antd.row :refer [row]]))
+
+(def disaggregated? (r/atom false) )
 
 (defn load-projects []
   (data/load))
@@ -36,7 +39,7 @@
         (into res (vec (repeat empty-cols [col {:span 4} "."])))
         res))))
 
-(defn impact-indicators [impact partners-data]
+(defn impact-indicators [impact partners-data disaggregated-data]
   (map-indexed
    (fn [item-id i]
      (let [res (into [slist/list {:key (str "impact-li" (:id impact) item-id)}]
@@ -45,7 +48,7 @@
                              (periods [[col {:span 8 :style {:padding-right "15px"}} (:title i)]] i))]
                       ])]
        res
-       (if-let [pd (seq (filter (fn [[k v]] (get v (data/partner-indicator-key impact i))) partners-data))]
+       (if-let [pd (and disaggregated-data (seq (filter (fn [[k v]] (get v (data/partner-indicator-key impact i))) partners-data)))]
          (do
            (into res
                 (reduce
@@ -91,21 +94,26 @@
            [menu-sub-menu {:key "3" :title "Impact"}]
            (:impacts @data/menu))])
 
+
+
 (defn impacts
   ([]
    (when (and (not (empty? (get @data/db data/main-project)))
               (= 5 (count @data/partners)))
      [:div
-      (impacts-menu)
-      (into [:div {:style {:margin "20px"}}]
-            (impacts [] (filter #(= (first @menu-option-selected) (str (:id %)))
-                                (get @data/db data/main-project)) @data/partners))]))
+      [row {:span 24}
+       [col {:span 12} (impacts-menu)]
+       [col {:span 12} [checkbox/checkbox {:on-change #(reset! disaggregated? (get-in (js->clj %) ["target" "checked"]))} "Contributors disaggregation"]]]
+      [row {:span 24}
+       (into [:div {:style {:margin "20px"}}]
+             (impacts [] (filter #(= (first @menu-option-selected) (str (:id %)))
+                                 (get @data/db data/main-project)) @data/partners))]]))
   ([container topics partners-data]
    (reduce
     (fn [c impact]
       (let [res [row {:span 24 :key (str (str "impact-div-" (:id impact))) :style {:margin "20px"}}
                  [card {:title (:title impact) :style {:width "90%"}}
-                  (impact-indicators impact partners-data)]]]
+                  (impact-indicators impact partners-data @disaggregated?)]]]
         (if (:outputs impact)
           (impacts (conj c res) (:outputs impact) partners-data)
           (conj c res))))
