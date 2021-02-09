@@ -1,16 +1,17 @@
 (ns hortinvest.ui.impacts
   (:require
+   [reagent.core :as r]
    [hortinvest.ui.impacts-data :as data]
    [clojure.string :refer [replace trim]]
    [syn-antd.col :refer [col]]
    [syn-antd.progress :refer [progress]]
    [syn-antd.row :refer [row]]
+   [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
    [syn-antd.list :as slist]
    [syn-antd.card :refer  [card]]))
 
 (defn load-projects []
-  (data/load)
-)
+  (data/load))
 
 (defn nan [x]
   (if (js/isNaN x) 0 x))
@@ -74,20 +75,38 @@
                  [[slist/list-item {:key (str (str "indicator-div-" item-id "-contributors")) :style {:width "100%"}}
                    [row {:style {:width "100%"}} [col  "Contributors"]]]] pd)
                 ))
-         res
-         )
-
-       )
-
-     )
+         res)))
    (:indicators impact)))
+
+(def menu-option-selected (r/atom ["30847" "2"]))
+
+(defn menu-change [app-state event]
+  (let [{:strs [keyPath] :as a} (js->clj event)]
+    (when (not= keyPath @menu-option-selected)
+      (reset! menu-option-selected keyPath))))
 
 (defn impacts
   ([]
    (when (and (not (empty? (get @data/db data/main-project)))
               (= 5 (count @data/partners)))
-     (into [:div {:style {:margin "20px"}}]
-           (impacts [] (get @data/db data/main-project) @data/partners))))
+     [:div
+      [menu {:mode "horizontal"
+             :defaultSelectedKeys "2";;(-> @app-state :current-page first)
+             :onClick #(menu-change menu-option-selected %)}
+
+       (reduce (fn [menu {:keys [id title]}]
+                 (conj menu
+                       [menu-item {:key id} title]))
+               [menu-sub-menu {:key "2" :title "Outcomes"}]
+               (:outcomes @data/menu))
+       (reduce (fn [menu {:keys [id title]}]
+                 (conj menu
+                       [menu-item {:key id} title]))
+               [menu-sub-menu {:key "3" :title "Impact"}]
+               (:impacts @data/menu))]
+      (into [:div {:style {:margin "20px"}}]
+            (impacts [] (filter #(= (first @menu-option-selected) (str (:id %)))
+                                (get @data/db data/main-project)) @data/partners))]))
   ([container topics partners-data]
    (reduce
     (fn [c impact]

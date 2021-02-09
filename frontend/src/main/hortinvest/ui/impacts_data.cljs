@@ -88,7 +88,9 @@
                    :id 9555}])
 
 (def control-chan (chan))
-(get @db main-project)
+
+(def menu (atom {:impacts [] :outcomes []}))
+
 (defn load-partners []
   (println "loading partners")
   (let [data (dissoc @db main-project)]
@@ -101,7 +103,9 @@
                                                                   (:periods i)))
                                                          c (:indicators p)))
                                                c1 v)))
-                              {} data)))))
+                              {} data))))
+  (swap! menu assoc :outcomes (mapv #(select-keys % [:id :title]) (filter #(= "2" (:type %)) (get @db main-project))))
+  (swap! menu assoc :impacts (mapv #(select-keys % [:id :title]) (filter #(= "3" (:type %)) (get @db main-project)))))
 
 (let [loaded (atom 0)]
   (go-loop []
