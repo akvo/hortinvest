@@ -5,11 +5,7 @@
    [clojure.string :refer [triml split]]
    [hortinvest.util :as util]
    [hortinvest.api :as api]
-   [reagent.core :as r]
-   [reagent.dom :as rdom]
-   [syn-antd.col :refer [col]]
-   [syn-antd.progress :refer [progress]]
-   [syn-antd.row :refer [row]]))
+   [reagent.core :as r]))
 
 (def db (r/atom {}))
 
@@ -48,8 +44,6 @@
                   {:title "Agriterra - HortInvest"
                    :id 9555}])
 
-(def control-chan (chan))
-
 (def menu (atom {:impacts [] :outcomes []}))
 
 (defn load-partners []
@@ -65,8 +59,12 @@
                                                          c (:indicators p)))
                                                c1 v)))
                               {} data))))
-  (swap! menu assoc :outcomes (mapv #(select-keys % [:id :title]) (filter #(= "2" (:type %)) (get @db main-project))))
-  (swap! menu assoc :impacts (mapv #(select-keys % [:id :title]) (filter #(= "3" (:type %)) (get @db main-project)))))
+
+  (let [outcomes (filter #(= "2" (:type %)) (get @db main-project))
+        impacts (filter #(= "3" (:type %)) (get @db main-project))]
+    (reset! menu {:outcomes outcomes :impacts impacts})))
+
+(def control-chan (chan))
 
 (let [loaded (atom 0)]
   (go-loop []
