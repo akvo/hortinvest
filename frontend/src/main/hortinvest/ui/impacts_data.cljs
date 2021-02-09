@@ -49,19 +49,26 @@
 (defn partner-indicator-key [impact indicator]
   (str (:title impact) "- - - - -" (:title indicator)))
 
-(defn load-partners []
-  (println "loading partners")
-  (let [data (dissoc @db main-project)]
-    (swap! partners (fn []
-                      (reduce (fn [c1 [k v]]
-                                (assoc c1 k
-                                       (reduce (fn [c p]
-                                                 (reduce (fn [c2 i]
-                                                           (assoc c2 (partner-indicator-key p i)
-                                                                  (:periods i)))
-                                                         c (:indicators p)))
-                                               c1 v)))
-                              {} data))))
+(defn load-partners
+  "build a dictionary with key is the result of `(partner-indicator-key [impact indicator])`
+  and value equals to periods list"
+  []
+  (let [assoc-indicators (fn [container partner-topic]
+                           (reduce (fn [c2 indicator]
+                                     (assoc c2 (partner-indicator-key partner-topic indicator)
+                                            (:periods indicator)))
+                                   container (:indicators partner-topic)))
+        res (reduce (fn [dict [partner partner-topics]]
+                      (assoc dict partner
+                             (reduce (fn [c partner-topic]
+                                       (let [res (assoc-indicators c partner-topic)]
+                                         (if-let [outputs (:outputs partner-topic)]
+                                           (reduce assoc-indicators res outputs)
+                                           res)))
+                                     dict partner-topics)))
+                    {}
+                    (dissoc @db main-project))]
+    (reset! partners res))
 
   (let [outcomes (filter #(= "2" (:type %)) (get @db main-project))
         impacts (filter #(= "3" (:type %)) (get @db main-project))]
