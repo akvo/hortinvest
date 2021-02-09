@@ -7,12 +7,12 @@
    [syn-antd.card :refer  [card]]
    [syn-antd.col :refer [col]]
    [syn-antd.list :as slist]
-   [syn-antd.checkbox :as checkbox]
+   [syn-antd.switch :as switch]
    [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
    [syn-antd.progress :refer [progress]]
    [syn-antd.row :refer [row]]))
 
-(def disaggregated? (r/atom false) )
+(def disaggregated? (r/atom true))
 
 (defn load-projects []
   (data/load))
@@ -69,30 +69,21 @@
          res)))
    (:indicators impact)))
 
-(def initial-option ["30847" "2"])
+(def initial-option "3")
 
 (def menu-option-selected (r/atom initial-option))
 
 (defn menu-change [app-state event]
-  (let [{:strs [keyPath] :as a} (js->clj event)]
-    (when (not= keyPath @menu-option-selected)
-      (reset! menu-option-selected keyPath))))
+  (let [{:strs [key] :as a} (js->clj event)]
+    (when (not= key @menu-option-selected)
+      (reset! menu-option-selected key))))
 
 (defn impacts-menu []
   [menu {:mode "horizontal"
-         :defaultSelectedKeys initial-option ;;(-> @app-state :current-page first)
+         :defaultSelectedKeys [initial-option] ;;(-> @app-state :current-page first)
          :onClick #(menu-change menu-option-selected %)}
-
-   (reduce (fn [menu {:keys [id title]}]
-             (conj menu
-                   [menu-item {:key id} title]))
-           [menu-sub-menu {:key "2" :title "Outcomes"}]
-           (:outcomes @data/menu))
-   (reduce (fn [menu {:keys [id title]}]
-             (conj menu
-                   [menu-item {:key id} title]))
-           [menu-sub-menu {:key "3" :title "Impact"}]
-           (:impacts @data/menu))])
+   [menu-item {:key "3"} "Impact"]
+   [menu-item {:key "2"} "Outcomes"]])
 
 
 
@@ -103,11 +94,14 @@
      [:div
       [row {:span 24}
        [col {:span 12} (impacts-menu)]
-       [col {:span 12} [checkbox/checkbox {:on-change #(reset! disaggregated? (get-in (js->clj %) ["target" "checked"]))} "Contributors disaggregation"]]]
-      [row {:span 24}
-       (into [:div {:style {:margin "20px"}}]
-             (impacts [] (filter #(= (first @menu-option-selected) (str (:id %)))
-                                 (get @data/db data/main-project)) @data/partners))]]))
+       [col {:span 12} [switch/switch
+                        {:checked @disaggregated?
+                         :on-change #(reset! disaggregated? (js->clj %))
+                         :size "small"}
+                        "Contributors disaggregation"]]]
+      (into [:div {:style {:margin "20px"}}]
+            (impacts [] (filter #(=  @menu-option-selected (:type %))
+                                (get @data/db data/main-project)) @data/partners))]))
   ([container topics partners-data]
    (reduce
     (fn [c impact]
