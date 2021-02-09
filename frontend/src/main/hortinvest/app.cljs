@@ -7,7 +7,7 @@
 
 
 (defonce app-state
-  (r/atom {:current-page [(-> config/dashboard-config first :id) "projects"]
+  (r/atom {:current-page ["results"]
            :projects {:config config/dashboard-config}}))
 
 (defn init []

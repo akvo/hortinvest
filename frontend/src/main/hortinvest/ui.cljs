@@ -12,12 +12,12 @@
          :mode "horizontal"
          :defaultSelectedKeys (-> @app-state :current-page first)
          :onClick #(util/menu-change app-state %)}
+   [menu-item {:key "results"} "Results"]
    (reduce (fn [menu {:keys [id title]}]
              (conj menu
                    [menu-item {:key id} title]))
            [menu-sub-menu {:key "projects" :title "Projects"}]
-           (-> @app-state :projects :config))
-   [menu-item {:key "results"} "Results"]])
+           (-> @app-state :projects :config))])
 
 (defn header [app-state]
   [layout-header
