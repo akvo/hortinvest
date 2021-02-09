@@ -36,9 +36,6 @@
         (into res (vec (repeat empty-cols [col {:span 4} "."])))
         res))))
 
-(defn partner-indicator-key [impact indicator]
-  (str (:title impact) "- - - - -" (:title indicator)))
-
 (defn impact-indicators [impact partners-data]
   (map-indexed
    (fn [item-id i]
@@ -48,15 +45,13 @@
                              (periods [[col {:span 8 :style {:padding-right "15px"}} (:title i)]] i))]
                       ])]
        res
-       (if-let [pd (seq (filter (fn [[k v]] (get v (partner-indicator-key impact i))) partners-data))]
+       (if-let [pd (seq (filter (fn [[k v]] (get v (data/partner-indicator-key impact i))) partners-data))]
          (do
-;;           (println (partner-indicator-key impact i))
            (into res
                 (reduce
                  (fn [c partner]
                    (let [partner-title (:title (key partner))
-                         partner-periods {:periods (get (val partner) (str (:title impact) "- - - - -" (:title i)))}]
-
+                         partner-periods {:periods (get (val partner) (data/partner-indicator-key impact i))}]
                      (conj c [slist/list-item {:key (str (str "indicator-div-" item-id partner-title)) :style {:width "100%"}}
                               (into [row {:style {:width "100%"}}]
                                     (periods [[col
@@ -71,32 +66,37 @@
          res)))
    (:indicators impact)))
 
-(def menu-option-selected (r/atom ["30847" "2"]))
+(def initial-option ["30847" "2"])
+
+(def menu-option-selected (r/atom initial-option))
 
 (defn menu-change [app-state event]
   (let [{:strs [keyPath] :as a} (js->clj event)]
     (when (not= keyPath @menu-option-selected)
       (reset! menu-option-selected keyPath))))
 
+(defn impacts-menu []
+  [menu {:mode "horizontal"
+         :defaultSelectedKeys initial-option ;;(-> @app-state :current-page first)
+         :onClick #(menu-change menu-option-selected %)}
+
+   (reduce (fn [menu {:keys [id title]}]
+             (conj menu
+                   [menu-item {:key id} title]))
+           [menu-sub-menu {:key "2" :title "Outcomes"}]
+           (:outcomes @data/menu))
+   (reduce (fn [menu {:keys [id title]}]
+             (conj menu
+                   [menu-item {:key id} title]))
+           [menu-sub-menu {:key "3" :title "Impact"}]
+           (:impacts @data/menu))])
+
 (defn impacts
   ([]
    (when (and (not (empty? (get @data/db data/main-project)))
               (= 5 (count @data/partners)))
      [:div
-      [menu {:mode "horizontal"
-             :defaultSelectedKeys "2";;(-> @app-state :current-page first)
-             :onClick #(menu-change menu-option-selected %)}
-
-       (reduce (fn [menu {:keys [id title]}]
-                 (conj menu
-                       [menu-item {:key id} title]))
-               [menu-sub-menu {:key "2" :title "Outcomes"}]
-               (:outcomes @data/menu))
-       (reduce (fn [menu {:keys [id title]}]
-                 (conj menu
-                       [menu-item {:key id} title]))
-               [menu-sub-menu {:key "3" :title "Impact"}]
-               (:impacts @data/menu))]
+      (impacts-menu)
       (into [:div {:style {:margin "20px"}}]
             (impacts [] (filter #(= (first @menu-option-selected) (str (:id %)))
                                 (get @data/db data/main-project)) @data/partners))]))

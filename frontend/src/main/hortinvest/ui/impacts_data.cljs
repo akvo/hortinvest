@@ -44,7 +44,10 @@
                   {:title "Agriterra - HortInvest"
                    :id 9555}])
 
-(def menu (atom {:impacts [] :outcomes []}))
+(def menu (r/atom {:impacts [] :outcomes []}))
+
+(defn partner-indicator-key [impact indicator]
+  (str (:title impact) "- - - - -" (:title indicator)))
 
 (defn load-partners []
   (println "loading partners")
@@ -54,7 +57,7 @@
                                 (assoc c1 k
                                        (reduce (fn [c p]
                                                  (reduce (fn [c2 i]
-                                                           (assoc c2 (str (:title p) "- - - - -" (:title i))
+                                                           (assoc c2 (partner-indicator-key p i)
                                                                   (:periods i)))
                                                          c (:indicators p)))
                                                c1 v)))
