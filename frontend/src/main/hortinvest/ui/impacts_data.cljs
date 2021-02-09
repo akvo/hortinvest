@@ -1,44 +1,19 @@
 (ns hortinvest.ui.impacts-data
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:require
+   [cljs.core.async :refer [<! chan >!]]
+   [clojure.string :refer [triml split]]
+   [hortinvest.util :as util]
+   [hortinvest.api :as api]
    [reagent.core :as r]
    [reagent.dom :as rdom]
-   [cljs-http.client :as http]
-   [cljs.core.async :refer [<! chan >!]]
-   [clojure.string :refer [includes? triml split]]
    [syn-antd.col :refer [col]]
    [syn-antd.progress :refer [progress]]
    [syn-antd.row :refer [row]]))
 
-(def host (.(. js/window -location) -host))
-
-(def development? (or (includes? host "localhost") (includes? host "akvotest")))
-
-(def api-domain (if (includes? host "akvotest")
-                  "https://rsr.test.akvo.org/rest"
-                  "https://rsr.akvo.org/rest"))
-
-(defn api [v s]
-  (str api-domain "/v" v "/" s))
-
 (def db (r/atom {}))
 
 (def partners (r/atom {}))
-
-(defn indicator-periods-url [project-id]
-  (if development?
-    (str "./jsons/" project-id "-indicator-periods.json")
-    (api 1 (str "indicator_period/?format=json&limit=100&indicator__result__project=" project-id))))
-
-(defn indicators-url [project-id]
-  (if development?
-    (str "./jsons/" project-id "-indicators.json")
-    (api 1 (str "indicator/?format=json&limit=100&result__project=" project-id))))
-
-(defn projects-url [project-id]
-  (if development?
-    (str "./jsons/" project-id "-results.json")
-    (api 2 (str "result/?format=json&limit=100&project=" project-id))))
 
 (defn parse-projects [projects indicators-parsed]
   (mapv
@@ -53,24 +28,10 @@
 (defn outcome-level [s]
   ;; TODO: should we throw an exception here?
   (let [r (first (re-find #"^(\d\.?)+" (triml s)))]
-    (. js/Number parseInt (first (split r #"\.")))
-    ))
+    (. js/Number parseInt (first (split r #"\.")))))
 
 ;;  (assert (= 1 (outcome-level "1.3.4 Trained RAB 88989")))
 ;;  (assert (= 5 (outcome-level "5.3.4 Trained RAB 88989")))
-(defn get-keys [tag]
-  (condp = tag
-    :projects [:id :title :type]
-    :indicators [:title :id :result]
-    :indicator-periods [:target_value :actual_value :period_start :period_end :indicator]))
-
-(defn load-rec [tag url]
-  (go (let [c (http/get url {:with-credentials? false})
-            b (:body (<! c))
-            results (:results b)]
-        (if (:next b)
-          (into results (<! (load-rec tag (:next b))))
-          (mapv #(select-keys % (get-keys tag)) results)))))
 
 (def main-project {:title "Hortinvest (Original)"
                    :id 7218})
@@ -121,9 +82,9 @@
    (doall (map load project-ids)))
   ([project-data]
    (go (let [project-id (:id project-data)
-             periods-chan (load-rec :indicator-periods (indicator-periods-url project-id))
-             indicators-chan (load-rec :indicators (indicators-url project-id))
-             projects-chan (load-rec :projects (projects-url project-id))
+             periods-chan (api/load-rec :indicator-periods (api/indicator-periods-url project-id))
+             indicators-chan (api/load-rec :indicators (api/indicators-url project-id))
+             projects-chan (api/load-rec :projects (api/projects-url project-id))
              periods (<! periods-chan)
              indicators (<! indicators-chan)
              parsed-indicators (parse-indicators indicators periods)

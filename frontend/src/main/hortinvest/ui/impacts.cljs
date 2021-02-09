@@ -1,27 +1,22 @@
 (ns hortinvest.ui.impacts
   (:require
-   [reagent.core :as r]
-   [hortinvest.ui.impacts-data :as data]
    [clojure.string :refer [replace trim]]
+   [hortinvest.ui.impacts-data :as data]
+   [hortinvest.util :as util]
+   [reagent.core :as r]
+   [syn-antd.card :refer  [card]]
    [syn-antd.col :refer [col]]
-   [syn-antd.progress :refer [progress]]
-   [syn-antd.row :refer [row]]
-   [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
    [syn-antd.list :as slist]
-   [syn-antd.card :refer  [card]]))
+   [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
+   [syn-antd.progress :refer [progress]]
+   [syn-antd.row :refer [row]]))
 
 (defn load-projects []
   (data/load))
 
-(defn nan [x]
-  (if (js/isNaN x) 0 x))
-
-(defn to-int [x]
-  (. js/Number parseInt x))
-
 (defn period-value [v]
   (if (and v (not= v ""))
-    (nan (to-int (trim (replace v #"\%" ""))))
+    (util/nan (util/to-int (trim (replace v #"\%" ""))))
     0))
 
 (defn periods [r i]
@@ -30,7 +25,7 @@
     (let [res (reduce (fn [c p]
                         (let [target (period-value (:target_value p))
                               actual (period-value (:actual_value p))
-                              percent (nan (to-int (* (/ actual target) 100)))]
+                              percent (util/nan (util/to-int (* (/ actual target) 100)))]
                           (conj c [col {:span 4}
                                    [:div
                                       [:div {:style {:fontSize "11px"}} (str (:period_start p) " - " (:period_end p))]
@@ -40,11 +35,9 @@
       (if (pos? empty-cols)
         (into res (vec (repeat empty-cols [col {:span 4} "."])))
         res))))
+
 (defn partner-indicator-key [impact indicator]
   (str (:title impact) "- - - - -" (:title indicator)))
-
-(let [k2 "1. Increased sustainable production and supplies of horticultural produce from smallholders (M/F)- - - - -1.1. Number of farmholders (male/female; 50% women; 15% < 30 age) with increased productivity and/or income"]
-  (filter (fn [[k v]] (get v k2)) @data/partners))
 
 (defn impact-indicators [impact partners-data]
   (map-indexed
