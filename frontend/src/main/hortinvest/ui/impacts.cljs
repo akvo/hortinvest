@@ -55,7 +55,7 @@
                              (periods [[col {:span 8 :style {:padding-right "15px"}} (:title i)]] i))]
                       ])]
        res
-       (if-let [pd (filter (fn [[k v]] (get v (partner-indicator-key impact i))) partners-data)]
+       (if-let [pd (seq (filter (fn [[k v]] (get v (partner-indicator-key impact i))) partners-data))]
          (do
 ;;           (println (partner-indicator-key impact i))
            (into res
