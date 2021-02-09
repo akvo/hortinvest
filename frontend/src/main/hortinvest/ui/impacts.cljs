@@ -173,7 +173,7 @@
    (reduce
     (fn [c impact]
       (let [res [row {:span 24 :key (str (str "impact-div-" (:id impact))) :style {:margin "20px"}}
-                 (into [card {:title (:title impact) :style {:width "90%"}}]
+                 (into [card {:title (:title impact) :style {:width "100%"}}]
                        (into (let [i (first (:indicators impact))]
                                [[slist/list {:key (str "impact-li-dates" (:id impact))}
                                  [slist/list-item {:key (str (str "indicator-div-date" (:id impact))) :style {:width "100%"}}
