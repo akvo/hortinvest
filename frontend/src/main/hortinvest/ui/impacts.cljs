@@ -1,6 +1,6 @@
 (ns hortinvest.ui.impacts
   (:require
-   [clojure.string :refer [replace trim]]
+   [clojure.string :refer [replace trim split]]
    [hortinvest.ui.impacts-data :as data]
    [hortinvest.util :as util]
    [reagent.core :as r]
@@ -12,11 +12,27 @@
    [syn-antd.progress :refer [progress]]
    [syn-antd.row :refer [row]]))
 
-(def initial-menu-option "3")
+(def initial-menu-option ["3"])
 
 (def view-db (r/atom {:switches {:percentages? true
                                  :disaggregated? false}
                       :menu {:option-selected initial-menu-option}}))
+
+(defn menu-change [view-db event]
+  (let [{:strs [key] :as a} (js->clj event)]
+    (when (not= key (-> @view-db :menu :option-selected))
+      (swap! view-db assoc-in [:menu :option-selected] key))))
+
+(defn impacts-menu []
+  [menu {:mode "horizontal"
+         :defaultSelectedKeys initial-menu-option ;;(-> @app-state :current-page first)
+         :onClick #(menu-change view-db %)}
+   [menu-item {:key ["3"]} "Impact"]
+   [menu-item {:key ["2" "1"]} "Outcome 1"]
+   [menu-item {:key ["2" "2"]} "Outcome 2"]
+   [menu-item {:key ["2" "3"]} "Outcome 3"]
+   [menu-item {:key ["2" "4"]} "Outcome 4"]])
+
 
 (defn load-projects []
   (data/load))
@@ -35,9 +51,14 @@
                               percent (util/nan (util/to-int (* (/ actual target) 100)))]
                           (conj c [col {:span 4}
                                    [:div
-                                      [:div {:style {:fontSize "11px"}} (str (:period_start p) " - " (:period_end p))]
-                                      [:div (str (period-value (:actual_value p)) " / " (period-value (:target_value p)))]
-                                      [progress {:percent percent :size "small" :style {:padding "8px"}}]]])))
+                                    [:div {:style {:fontSize "11px" :textAlign "right"}}
+                                     (str (:period_start p) " - " (:period_end p))]
+                                    [:div {:style {:textAlign "right"}}
+                                     (period-value (:actual_value p))
+                                     [:br]
+                                     (period-value (:target_value p))]
+                                      ;;[progress {:percent percent :size "small" :style {:padding "8px"}}]
+                                    ]])))
                       r periods )]
       (if (pos? empty-cols)
         (into res (vec (repeat empty-cols [col {:span 4} "."])))
@@ -49,8 +70,7 @@
      (let [res (into [slist/list {:key (str "impact-li" (:id impact) item-id)}]
                      [[slist/list-item {:key (str (str "indicator-div-" item-id)) :style {:width "100%"}}
                        (into [row {:style {:width "100%"}}]
-                             (periods [[col {:span 8 :style {:padding-right "15px"}} (:title i)]] i))]
-                      ])]
+                             (periods [[col {:span 8 :style {:padding-right "15px"}} (:title i)]] i))]])]
        res
        (if-let [pd (and (:disaggregated? switches) (seq (filter (fn [[k v]] (get v (data/partner-indicator-key impact i))) partners-data)))]
          (do
@@ -73,19 +93,6 @@
          res)))
    (:indicators impact)))
 
-
-(defn menu-change [view-db event]
-  (let [{:strs [key] :as a} (js->clj event)]
-    (when (not= key (-> @view-db :menu :option-selected))
-      (swap! view-db assoc-in [:menu :option-selected] key))))
-
-(defn impacts-menu []
-  [menu {:mode "horizontal"
-         :defaultSelectedKeys [initial-menu-option] ;;(-> @app-state :current-page first)
-         :onClick #(menu-change view-db %)}
-   [menu-item {:key "3"} "Impact"]
-   [menu-item {:key "2"} "Outcomes"]])
-
 (defn impacts
   ([]
    (when (and (not (empty? (get @data/db data/main-project)))
@@ -101,7 +108,7 @@
                   :marginLeft "10px"}
           :on-change #(swap! view-db update-in [:switches :percentages?] not (js->clj %))
           :size "small"}]
-        [:span  "Contributors disaggregation"]
+        [:span  "Contributors"]
         [switch/switch
          {:checked (-> @view-db :switches :disaggregated?)
           :style {:marginLeft "10px"}
@@ -115,8 +122,18 @@
         (impacts-menu)]
 ]
       (into [:div {:style {:margin "20px"}}]
-            (impacts [] (filter #(=  (-> @view-db :menu :option-selected) (:type %))
-                                (get @data/db data/main-project)) @data/partners))]))
+            (let [option-selected (-> @view-db :menu :option-selected)
+                  outcome-selected (second (split option-selected #","))]
+              (impacts [] (filter #(and (= (first option-selected)  (:type %))
+                                        (or (nil? outcome-selected)
+                                            (do
+                                              (println outcome-selected (util/to-int outcome-selected)
+                                               (data/outcome-level (:title %)))
+
+                                              (= (util/to-int outcome-selected)
+                                                 (data/outcome-level (:title %)))))
+                                        )
+                                  (get @data/db data/main-project)) @data/partners)))]))
   ([container topics partners-data]
    (reduce
     (fn [c impact]
