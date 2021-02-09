@@ -12,6 +12,7 @@
    [syn-antd.progress :refer [progress]]
    [syn-antd.row :refer [row]]))
 
+(def percentages? (r/atom true))
 (def disaggregated? (r/atom true))
 
 (defn load-projects []
@@ -85,20 +86,34 @@
    [menu-item {:key "3"} "Impact"]
    [menu-item {:key "2"} "Outcomes"]])
 
-
-
 (defn impacts
   ([]
    (when (and (not (empty? (get @data/db data/main-project)))
               (= 5 (count @data/partners)))
      [:div
+      [:div {:class "ant-menu-horizontal"
+             :style {:float "right"}}
+       [:div {:style {:marginRight "10px"}}
+        [:span  "Percentages"]
+        [switch/switch
+         {:checked @percentages?
+          :style {:marginRight "30px"
+                  :marginLeft "10px"}
+          :on-change #(reset! percentages? (js->clj %))
+          :size "small"}]
+        [:span  "Contributors disaggregation"]
+        [switch/switch
+         {:checked @disaggregated?
+          :style {:marginLeft "10px"}
+          :on-change #(reset! disaggregated? (js->clj %))
+          :size "small"}]
+        ]
+       ]
       [row {:span 24}
-       [col {:span 12} (impacts-menu)]
-       [col {:span 12} [switch/switch
-                        {:checked @disaggregated?
-                         :on-change #(reset! disaggregated? (js->clj %))
-                         :size "small"}
-                        "Contributors disaggregation"]]]
+
+       [col {:span 24}
+        (impacts-menu)]
+]
       (into [:div {:style {:margin "20px"}}]
             (impacts [] (filter #(=  @menu-option-selected (:type %))
                                 (get @data/db data/main-project)) @data/partners))]))
