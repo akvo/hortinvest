@@ -15,7 +15,7 @@
 (def initial-menu-option "3")
 
 (def view-db (r/atom {:switches {:percentages? true
-                                 :disaggregated? true}
+                                 :disaggregated? false}
                       :menu {:option-selected initial-menu-option}}))
 
 (defn load-projects []
