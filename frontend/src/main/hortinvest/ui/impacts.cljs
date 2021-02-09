@@ -12,8 +12,11 @@
    [syn-antd.progress :refer [progress]]
    [syn-antd.row :refer [row]]))
 
-(def percentages? (r/atom true))
-(def disaggregated? (r/atom true))
+(def initial-menu-option "3")
+
+(def view-db (r/atom {:switches {:percentages? true
+                                 :disaggregated? true}
+                      :menu {:option-selected initial-menu-option}}))
 
 (defn load-projects []
   (data/load))
@@ -40,7 +43,7 @@
         (into res (vec (repeat empty-cols [col {:span 4} "."])))
         res))))
 
-(defn impact-indicators [impact partners-data disaggregated-data]
+(defn impact-indicators [impact partners-data switches]
   (map-indexed
    (fn [item-id i]
      (let [res (into [slist/list {:key (str "impact-li" (:id impact) item-id)}]
@@ -49,7 +52,7 @@
                              (periods [[col {:span 8 :style {:padding-right "15px"}} (:title i)]] i))]
                       ])]
        res
-       (if-let [pd (and disaggregated-data (seq (filter (fn [[k v]] (get v (data/partner-indicator-key impact i))) partners-data)))]
+       (if-let [pd (and (:disaggregated? switches) (seq (filter (fn [[k v]] (get v (data/partner-indicator-key impact i))) partners-data)))]
          (do
            (into res
                 (reduce
@@ -70,19 +73,16 @@
          res)))
    (:indicators impact)))
 
-(def initial-option "3")
 
-(def menu-option-selected (r/atom initial-option))
-
-(defn menu-change [app-state event]
+(defn menu-change [view-db event]
   (let [{:strs [key] :as a} (js->clj event)]
-    (when (not= key @menu-option-selected)
-      (reset! menu-option-selected key))))
+    (when (not= key (-> @view-db :menu :option-selected))
+      (swap! view-db assoc-in [:menu :option-selected] key))))
 
 (defn impacts-menu []
   [menu {:mode "horizontal"
-         :defaultSelectedKeys [initial-option] ;;(-> @app-state :current-page first)
-         :onClick #(menu-change menu-option-selected %)}
+         :defaultSelectedKeys [initial-menu-option] ;;(-> @app-state :current-page first)
+         :onClick #(menu-change view-db %)}
    [menu-item {:key "3"} "Impact"]
    [menu-item {:key "2"} "Outcomes"]])
 
@@ -96,16 +96,16 @@
        [:div {:style {:marginRight "10px"}}
         [:span  "Percentages"]
         [switch/switch
-         {:checked @percentages?
+         {:checked (-> @view-db :switches :percentages?)
           :style {:marginRight "30px"
                   :marginLeft "10px"}
-          :on-change #(reset! percentages? (js->clj %))
+          :on-change #(swap! view-db update-in [:switches :percentages?] not (js->clj %))
           :size "small"}]
         [:span  "Contributors disaggregation"]
         [switch/switch
-         {:checked @disaggregated?
+         {:checked (-> @view-db :switches :disaggregated?)
           :style {:marginLeft "10px"}
-          :on-change #(reset! disaggregated? (js->clj %))
+          :on-change #(swap! view-db update-in [:switches :disaggregated?] not (js->clj %))
           :size "small"}]
         ]
        ]
@@ -115,14 +115,14 @@
         (impacts-menu)]
 ]
       (into [:div {:style {:margin "20px"}}]
-            (impacts [] (filter #(=  @menu-option-selected (:type %))
+            (impacts [] (filter #(=  (-> @view-db :menu :option-selected) (:type %))
                                 (get @data/db data/main-project)) @data/partners))]))
   ([container topics partners-data]
    (reduce
     (fn [c impact]
       (let [res [row {:span 24 :key (str (str "impact-div-" (:id impact))) :style {:margin "20px"}}
                  [card {:title (:title impact) :style {:width "90%"}}
-                  (impact-indicators impact partners-data @disaggregated?)]]]
+                  (impact-indicators impact partners-data (:switches @view-db))]]]
         (if (:outputs impact)
           (impacts (conj c res) (:outputs impact) partners-data)
           (conj c res))))
