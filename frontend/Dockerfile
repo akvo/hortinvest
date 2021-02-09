@@ -18,4 +18,5 @@ RUN set eux; \
         cp /app/resources/main/public/jsons/* ./release/jsons/
 
 FROM nginx:stable-alpine
+COPY nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=cljs-builder /app/release /usr/share/nginx/html
