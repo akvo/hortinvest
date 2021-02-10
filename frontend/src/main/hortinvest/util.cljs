@@ -27,9 +27,10 @@
            opts)
     (merge {:style style-opts} opts)))
 
-(defonce piwik
-  (when-let [p (. js/window -Piwik)]
-    (. p getTracker "https://hortinvest.akvotest.org" "65b7a0f2-16a4-43c0-bde5-fd4bcf2231ac")))
+(def piwik
+  (. (. js/window -Piwik) getTracker "https://hortinvest.akvotest.org" "65b7a0f2-16a4-43c0-bde5-fd4bcf2231ac"))
 
 (defn track-page-view [s]
-  (when piwik (. piwik trackPageView s)))
+  (when piwik
+    (println "track-page-view" s)
+    (. piwik trackPageView s)))
