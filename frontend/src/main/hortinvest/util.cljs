@@ -16,3 +16,13 @@
 (def host (.(. js/window -location) -host))
 
 (def development? (or (includes? host "localhost") (includes? host "akvotest")))
+
+
+(defn grid-opts [opts & [style-opts color]]
+  (if false #_(includes? host "localhost")
+    (merge (merge {:style (merge
+                          {:border 1 :border-style "solid"}
+                          {:border-color (or color "gray")}
+                          style-opts)})
+           opts)
+    (merge {:style style-opts} opts)))
