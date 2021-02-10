@@ -32,8 +32,10 @@
 (defn piwik []
   (or @piwik*
       (when-let [p (. js/window -Piwik)]
-        (reset! piwik* (. p getTracker "https://hortinvest.akvotest.org" "65b7a0f2-16a4-43c0-bde5-fd4bcf2231ac"))
-        )))
+        (reset! piwik* (. p getTracker (if (includes? host "akvotest")
+                                         "https://hortinvest.akvotest.org"
+                                         "https://hortinvest.akvo.org")
+                          "65b7a0f2-16a4-43c0-bde5-fd4bcf2231ac")))))
 
 (defn track-page-view [s]
   (when-let [^js/Tracker p (piwik)]
