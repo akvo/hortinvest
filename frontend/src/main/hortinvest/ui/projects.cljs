@@ -1,11 +1,13 @@
 (ns hortinvest.ui.projects
   (:require
    [goog.string.format]
+   [hortinvest.util :as util]
    [syn-antd.col :refer [col]]
    [syn-antd.row :refer [row]]))
 
 
 (defn projects [app-state]
+  (util/track-page-view "projects")
   (let [{:keys [current-page projects]} @app-state
         {:keys [height src]} (first (filter #(= (:id %) (first current-page))
                                             (:config projects)))]

@@ -146,6 +146,7 @@
 
 (defn impacts
   ([]
+   (util/track-page-view "results")
    (when (and (not (empty? (get @data/db data/main-project)))
               (= 5 (count @data/partners)))
      [:div
