@@ -27,10 +27,15 @@
            opts)
     (merge {:style style-opts} opts)))
 
-(def piwik
-  (. (. js/window -Piwik) getTracker "https://hortinvest.akvotest.org" "65b7a0f2-16a4-43c0-bde5-fd4bcf2231ac"))
+(def piwik* (atom nil))
+
+(defn piwik []
+  (or @piwik*
+      (when-let [p (. js/window -Piwik)]
+        (reset! piwik* (. p getTracker "https://hortinvest.akvotest.org" "65b7a0f2-16a4-43c0-bde5-fd4bcf2231ac"))
+        )))
 
 (defn track-page-view [s]
-  (when piwik
+  (when-let [^js/Tracker p (piwik)]
     (println "track-page-view" s)
-    (. piwik trackPageView s)))
+    (. p trackPageView s)))
