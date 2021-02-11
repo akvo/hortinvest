@@ -42,9 +42,9 @@
    (rf/router routes/routes {:conflicts nil
                              :data {:config config/config}})
    (fn [m]
-     (swap! app-state #(assoc % :route-match m)))
+     (swap! app-state2 #(assoc % :route-match m)))
    {:use-fragment true})
-  (rdom/render [ui2/root app-state]
+  (rdom/render [ui2/root app-state2]
                (.getElementById js/document "app")))
 
 (defn init []
