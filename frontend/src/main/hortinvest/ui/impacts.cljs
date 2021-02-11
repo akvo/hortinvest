@@ -69,10 +69,9 @@
   [n] (cl-format nil "~:d" n))
 
 (defn period-value [v]
-  (let [res (if (and v (not= v ""))
-              (util/nan (util/to-int (trim (replace v #"\%" ""))))
-              0)]
-    (int-comma res)))
+  (if (and v (not= v ""))
+    (util/nan (util/to-int (trim (replace v #"\%" ""))))
+    0))
 
 (defn dates [r i]
   (let [periods (:periods i)
@@ -95,13 +94,12 @@
                           (conj c [col (grid-opts {:span 4})
                                    [row (grid-opts {} {} "green")
                                     [col (grid-opts {:span 12} {:textAlign "right"} "red")
-                                     (period-value (:actual_value p))
+                                     (int-comma actual)
                                      [:br]
-                                     (period-value (:target_value p))]
+                                     (int-comma target)]
                                     [col (grid-opts {:span 1})]
                                     [col (grid-opts {:span 11} {:padding "10px"} "blue")
-                                     (when (-> switches :percentages?) [dot {:percent percent :style {:whiteSpace "nowrap"}}])
-                                     ]
+                                     (when (-> switches :percentages?) [dot {:percent percent :style {:whiteSpace "nowrap"}}])]
 
 
                                     ]])))
