@@ -1,5 +1,6 @@
 (ns hortinvest.routes
   (:require
+   [hortinvest.ui.impacts :as impacts]
    [hortinvest.ui2 :as ui2]))
 
 
@@ -10,7 +11,7 @@
     ["/:id" {:name :project :view ui2/project-page}]]
    ["/results"
     ["" {:name :results :view ui2/results-page}]
-    ["/impact" {:name :impact :view ui2/impact-page}]
+    ["/impact" {:name :impact :view impacts/impacts}]
     ["/outcomes"
      ["" {:name :outcome-list :view ui2/outcome-list-page}]
      ["/:id" {:name :outcome :view ui2/outcome-page}]]]

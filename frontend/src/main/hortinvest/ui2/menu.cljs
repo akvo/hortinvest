@@ -1,8 +1,11 @@
 (ns hortinvest.ui2.menu
   (:require
+   [hortinvest.ui.impacts :as i]
    [reitit.frontend.easy :as rfe]
+   [syn-antd.layout :refer [layout-header]]
    [syn-antd.menu :refer [menu menu-item]]
-   [syn-antd.layout :refer [layout-header]]))
+   [syn-antd.switch :as switch]))
+
 
 (defn header-top-menu [app-state]
   (let [path (-> @app-state :route-match :path)
@@ -35,16 +38,36 @@
    [:a {:href (rfe/href :outcome {:id id})} title]])
 
 (defn results-menu [app-state]
+  (i/load-projects)
   (let [state @app-state
         outcome-configs (-> state :config :results :outcomes)]
-    [menu {:mode "horizontal"
-           :selectedKeys [(-> state :route-match :path)]
-           :style {:line-height "32px"}
-           :theme "light"}
-     [menu-item {:key "/results/impact"}
-      [:a {:href (rfe/href :impact)} "Impact"]]
-     (for [config outcome-configs]
-       (outcome-menu-item config))]))
+    [:div
+     [:div {:class "ant-menu-horizontal"
+            :style {:float "right"
+                    :lineHeight "32px"}}
+      [:div {:style {:marginRight "10px"}}
+       [:span  "Percentages"]
+       [switch/switch
+        {:checked (-> @app-state :switches :percentages?)
+         :style {:marginRight "30px"
+                 :marginLeft "10px"}
+         :on-change #(swap! app-state update-in [:switches :percentages?] not (js->clj %))
+         :size "small"}]
+       [:span  "Contributors"]
+       [switch/switch
+        {:checked (-> @app-state :switches :disaggregated?)
+         :style {:marginLeft "10px"}
+         :on-change #(swap! app-state update-in [:switches :disaggregated?] not (js->clj %))
+         :size "small"}]
+       ]]
+     [menu {:mode "horizontal"
+            :selectedKeys [(-> state :route-match :path)]
+            :style {:line-height "32px"}
+            :theme "light"}
+      [menu-item {:key "/results/impact"}
+       [:a {:href (rfe/href :impact)} "Impact"]]
+      (for [config outcome-configs]
+        (outcome-menu-item config))]]))
 
 (defn header-sub-menu [app-state]
   (let [state @app-state

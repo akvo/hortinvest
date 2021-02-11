@@ -26,5 +26,16 @@
     :height "1000"
     :src "https://hortinvest.akvolumen.org/s/XjKn6k2yRmM"}])
 
+(def outcomes
+  [{:title "Outcome 1"
+    :id "1"}
+   {:title "Outcome 2"
+    :id "2"}
+   {:title "Outcome 3"
+    :id "3"}
+   {:title "Outcome 4"
+    :id "4"}])
+
 (def config
-  {:projects dashboard-config})
+  {:projects dashboard-config
+   :results {:outcomes outcomes}})

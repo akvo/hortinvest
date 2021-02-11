@@ -34,8 +34,10 @@
 ;;
 
 (defonce app-state2
-  (r/atom {:route-match nil
-           :config config/config}))
+  (r/atom {:config config/config
+           :route-match nil
+           :switches {:percentages? true
+                      :disaggregated? false}}))
 
 (defn init-version-2 []
   (rfe/start!
