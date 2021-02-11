@@ -131,7 +131,13 @@
    (fn [item-id i]
      (let [res (into [row (grid-opts {:key (str "impact-li" (:id impact) item-id)} {:margin-bottom "20px"} "red")]
                      (periods [[col (grid-opts {:span 8} {:padding-right "15px"}) (:title i)]] i switches))]
-       (if-let [pd (and (:disaggregated? switches) (seq (filter (fn [[k v]] (get v (data/partner-indicator-key impact i))) partners-data)))]
+       (if-let [pd (and (:disaggregated? switches) (seq (filter (fn [[k v]]
+                                                                  (->>
+                                                                   (get v (data/partner-indicator-key impact i))
+                                                                   ;; TODO enable if we want to hide contributors with 0 as actual_value
+                                                                   ;;(filter #(pos? (period-value (:actual_value %))))
+                                                                   ;;seq
+                                                                   )) partners-data)))]
          (into res
                [[row (grid-opts {} {:width "100%"})
                  (into [col (grid-opts {:span 24 })]
