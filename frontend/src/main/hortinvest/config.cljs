@@ -25,3 +25,6 @@
     :title "Events"
     :height "1000"
     :src "https://hortinvest.akvolumen.org/s/XjKn6k2yRmM"}])
+
+(def config
+  {:projects dashboard-config})
