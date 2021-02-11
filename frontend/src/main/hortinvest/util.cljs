@@ -40,4 +40,5 @@
 (defn track-page-view [s]
   (when-let [^js/Tracker p (piwik)]
     (println "track-page-view" s)
-    (. p trackPageView s)))
+    (. p setDocumentTitle s)
+    (. p trackPageView)))
