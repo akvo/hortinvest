@@ -35,9 +35,11 @@
     :indicator-periods [:target_value :actual_value :period_start :period_end :indicator]))
 
 (defn load-rec [tag url]
-  (go (let [c (http/get url {:with-credentials? false})
-            b (:body (<! c))
-            results (:results b)]
-        (if (:next b)
-          (into results (<! (load-rec tag (:next b))))
-          (mapv #(select-keys % (get-keys tag)) results)))))
+  (go (let [response (<! (http/get url {:with-credentials? false}))]
+        (if (contains? http/unexceptional-status? (:status response))
+          (let [b (:body response)
+                results (:results b)]
+            (if (:next b)
+              (into results (<! (load-rec tag (:next b))))
+              (mapv #(select-keys % (get-keys tag)) results)))
+          [:error (:status response) response]))))

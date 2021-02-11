@@ -8,6 +8,7 @@
    [reagent.core :as r]
    [goog.string :as gstring]
    [syn-antd.card :refer  [card]]
+   [syn-antd.result :refer  [result]]
    [syn-antd.col :refer [col]]
    [syn-antd.list :as slist]
    [syn-antd.switch :as switch]
@@ -145,39 +146,47 @@
 (defn impacts
   ([]
    (util/track-page-view "results")
-   (when (and (not (empty? (get @data/db data/main-project)))
-              (= 5 (count @data/partners)))
+   (if (seq @data/api-error)
      [:div
-      [:div {:class "ant-menu-horizontal"
-             :style {:float "right"}}
-       [:div {:style {:marginRight "10px"}}
-        [:span  "Percentages"]
-        [switch/switch
-         {:checked (-> @view-db :switches :percentages?)
-          :style {:marginRight "30px"
-                  :marginLeft "10px"}
-          :on-change #(swap! view-db update-in [:switches :percentages?] not (js->clj %))
-          :size "small"}]
-        [:span  "Contributors"]
-        [switch/switch
-         {:checked (-> @view-db :switches :disaggregated?)
-          :style {:marginLeft "10px"}
-          :on-change #(swap! view-db update-in [:switches :disaggregated?] not (js->clj %))
-          :size "small"}]
+         (into
+          [result {:status "warning" :title "There are some problems trying to load the RSR data"}
+           "An error has been reported and we'll fix it as soon as possible "
+           [:hr]
+           [:h4 "Technical error details reported:"]]
+          (mapv #(vector :h5 (str (select-keys (last %) [:status :body :trace-redirects] ))) @data/api-error))]
+    (when (and (not (empty? (get @data/db data/main-project)))
+               (= 5 (count @data/partners)))
+      [:div
+       [:div {:class "ant-menu-horizontal"
+              :style {:float "right"}}
+        [:div {:style {:marginRight "10px"}}
+         [:span  "Percentages"]
+         [switch/switch
+          {:checked (-> @view-db :switches :percentages?)
+           :style {:marginRight "30px"
+                   :marginLeft "10px"}
+           :on-change #(swap! view-db update-in [:switches :percentages?] not (js->clj %))
+           :size "small"}]
+         [:span  "Contributors"]
+         [switch/switch
+          {:checked (-> @view-db :switches :disaggregated?)
+           :style {:marginLeft "10px"}
+           :on-change #(swap! view-db update-in [:switches :disaggregated?] not (js->clj %))
+           :size "small"}]
+         ]
         ]
-       ]
-      [row (grid-opts {:span 24} {} "cyan")
-       [col (grid-opts {:span 24})
-        (impacts-menu)]
-]
-      (into [:div {:style {:margin "20px"}}]
-            (let [option-selected (-> @view-db :menu :option-selected)
-                  outcome-selected (second (split option-selected #","))]
-              (impacts [] (filter #(and (= (first option-selected)  (:type %))
-                                        (or (nil? outcome-selected)
-                                            (= (util/to-int outcome-selected)
-                                               (data/outcome-level (:title %)))))
-                                  (get @data/db data/main-project)) @data/partners)))]))
+       [row (grid-opts {:span 24} {} "cyan")
+        [col (grid-opts {:span 24})
+         (impacts-menu)]
+        ]
+       (into [:div {:style {:margin "20px"}}]
+             (let [option-selected (-> @view-db :menu :option-selected)
+                   outcome-selected (second (split option-selected #","))]
+               (impacts [] (filter #(and (= (first option-selected)  (:type %))
+                                         (or (nil? outcome-selected)
+                                             (= (util/to-int outcome-selected)
+                                                (data/outcome-level (:title %)))))
+                                   (get @data/db data/main-project)) @data/partners)))])))
   ([container topics partners-data]
    (reduce
     (fn [c impact]

@@ -44,8 +44,6 @@
                   {:title "Agriterra - HortInvest"
                    :id 9555}])
 
-(def menu (r/atom {:impacts [] :outcomes []}))
-
 (defn partner-indicator-key [impact indicator]
   (str (:title impact) "- - - - -" (:title indicator)))
 
@@ -68,45 +66,52 @@
                                      dict partner-topics)))
                     {}
                     (dissoc @db main-project))]
-    (reset! partners res))
-
-  (let [outcomes (filter #(= "2" (:type %)) (get @db main-project))
-        impacts (filter #(= "3" (:type %)) (get @db main-project))]
-    (reset! menu {:outcomes outcomes :impacts impacts})))
+    (reset! partners res)))
 
 (def control-chan (chan))
 
+(def api-error (r/atom []))
+
 (let [loaded (atom 0)]
   (go-loop []
-         (let [data (<! control-chan)]
-           (swap! loaded inc)
-           (print @loaded data)
-           (if (= (count project-ids) @loaded)
-             (load-partners)
-             (recur)))))
+    (let [data (<! control-chan)]
+      (swap! loaded inc)
+      (if (= (count project-ids) @loaded)
+        (load-partners)
+        (recur)))))
 
 (defn load
   ([]
    (doall (map load project-ids)))
   ([project-data]
-   (go (let [project-id (:id project-data)
+   (go (let [read-chan (fn [c]
+                         (go (let [data (<! c)]
+                               (if (= :error (first data))
+                                 (do
+                                   (swap! api-error conj data)
+                                   (throw (ex-info "api error" data))
+                                   nil)
+                                 data))))
+             project-id (:id project-data)
              periods-chan (api/load-rec :indicator-periods (api/indicator-periods-url project-id))
              indicators-chan (api/load-rec :indicators (api/indicators-url project-id))
              projects-chan (api/load-rec :projects (api/projects-url project-id))
-             periods (<! periods-chan)
-             indicators (<! indicators-chan)
-             parsed-indicators (parse-indicators indicators periods)
-             projects-parsed (parse-projects (<! projects-chan) parsed-indicators)
-             projects-by-type (group-by :type  projects-parsed)
-             indicators* (get projects-by-type "3")
-             outputs (->> (get projects-by-type "1")
-                          (map #(assoc % :outcome-level (outcome-level (:title %)))))
-             outcomes (->> (get projects-by-type "2")
-                           (map (fn [o]
-                                  (let [ol (outcome-level (:title o))]
-                                    (assoc o :outputs (vec (filter #(= ol (:outcome-level %)) outputs)))))))]
-         (swap! db (fn [x]  (assoc x project-data
-                                   (-> []
-                                       (into indicators*)
-                                       (into outcomes)))))
-         (>! control-chan project-data)))))
+             periods (<! (read-chan periods-chan))
+             indicators (<! (read-chan indicators-chan))
+             projects (<! (read-chan projects-chan))]
+         (if (and periods indicators projects)
+           (let [parsed-indicators (parse-indicators indicators periods)
+                 projects-parsed (parse-projects projects parsed-indicators)
+                 projects-by-type (group-by :type  projects-parsed)
+                 indicators* (get projects-by-type "3")
+                 outputs (->> (get projects-by-type "1")
+                              (map #(assoc % :outcome-level (outcome-level (:title %)))))
+                 outcomes (->> (get projects-by-type "2")
+                               (map (fn [o]
+                                      (let [ol (outcome-level (:title o))]
+                                        (assoc o :outputs (vec (filter #(= ol (:outcome-level %)) outputs)))))))]
+             (swap! db (fn [x]  (assoc x project-data
+                                       (-> []
+                                           (into indicators*)
+                                           (into outcomes)))))
+             (>! control-chan project-data)))))))
