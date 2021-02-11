@@ -10,7 +10,6 @@
    [syn-antd.card :refer  [card]]
    [syn-antd.result :refer  [result]]
    [syn-antd.col :refer [col]]
-   [syn-antd.list :as slist]
    [syn-antd.switch :as switch]
    [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
    [syn-antd.progress :refer [progress]]
@@ -85,60 +84,82 @@
         (into res (vec (repeat empty-cols [col (grid-opts {:span 4}) ""])))
         res))))
 
-(defn periods [r i switches]
+(defn periods [r i switches & [contributors?]]
   (let [periods (:periods i)
         empty-cols (- 4 (count periods))]
     (let [res (reduce (fn [c p]
                         (let [target (period-value (:target_value p))
                               actual (period-value (:actual_value p))
                               percent (util/nan (util/to-int (* (/ actual target) 100)))]
-                          (conj c [col (grid-opts {:span 4})
-                                   [row (grid-opts {} {} "green")
-                                    [col (grid-opts {:span 12} {:textAlign "right"} "red")
-                                     (int-comma actual)
-                                     [:br]
-                                     (int-comma target)]
-                                    [col (grid-opts {:span 1})]
-                                    [col (grid-opts {:span 11} {:padding "10px"} "blue")
-                                     (when (-> switches :percentages?) [dot {:percent percent :style {:whiteSpace "nowrap"}}])]
+                          (conj c [col (grid-opts {:span 4}  (when contributors?
+                                                               {:border-bottom "1px solid #EEE"
+                                                                :margin-bottom "10px"}))
+                                   (if contributors?
+                                     [row (grid-opts {}  {:font-size "11px"
+                                                          :margin-top "10px"}
+                                                     "green")
+                                      [col (grid-opts {:span 12} {:textAlign "right"} "red")
+                                       (int-comma actual)]
+                                      [col (grid-opts {:span 12})]]
+                                     [row (grid-opts {}  (merge
+                                                          {:font-size "11px"
+                                                           :margin-top "10px"}
+                                                          (when contributors?
+                                                            {:border-bottom "1px solid #EEE"
+                                                             :margin-bottom "10px"})) "green")
+                                      [col (grid-opts {:span 12} {:textAlign "right"} "red")
+                                       (int-comma actual)
+                                       [:br]
+                                       (int-comma target)]
+                                      [col (grid-opts {:span 1})]
+                                      [col (grid-opts {:span 11} {:padding "10px"} "blue")
+                                       (when (-> switches :percentages?) [dot {:percent percent :style {:whiteSpace "nowrap"}}])]
 
 
-                                    ]])))
+                                      ])])))
                       r periods )]
       (if (pos? empty-cols)
-        (into res (vec (repeat empty-cols [col (grid-opts {:span 4}) ""])))
+        (into res (vec (repeat empty-cols [col (grid-opts {:span 4} (merge
+                                                                     {}
+                                                                     (when contributors?
+                                                                       {:border-bottom "1px solid #EEE"
+                                                                        :margin-bottom "10px"}))) ""])))
         res))))
 
 (defn impact-indicators [impact partners-data switches]
   (map-indexed
    (fn [item-id i]
-     (let [res (into [slist/list {:key (str "impact-li" (:id impact) item-id)}]
-                     [[slist/list-item {:key (str (str "indicator-div-" item-id)) :style {:width "100%"}}
-                       (into [row (grid-opts {} {:width "100%"} "red")]
-                             (periods [[col (grid-opts {:span 8} {:padding-right "15px"}) (:title i)]] i switches))]])]
+     (let [res (into [row (grid-opts {:key (str "impact-li" (:id impact) item-id)} {:margin-bottom "20px"} "red")]
+                     (periods [[col (grid-opts {:span 8} {:padding-right "15px"}) (:title i)]] i switches))]
        (if-let [pd (and (:disaggregated? switches) (seq (filter (fn [[k v]] (get v (data/partner-indicator-key impact i))) partners-data)))]
          (into res
                [[row (grid-opts {} {:width "100%"})
-                 [col (grid-opts {:span 24 })
-                  (into [slist/list {:key (str "impact-li-dates-sss" (:id impact))}]
-                        (reduce
-                         (fn [c partner]
-                           (let [partner-title (:title (key partner))
-                                 partner-periods {:periods (get (val partner) (data/partner-indicator-key impact i))}]
-                             (conj c [slist/list-item {:key (str (str "indicator-div-" item-id partner-title))}
-                                      (into [row (grid-opts {} {:width "100%"} "green")]
-                                            (periods [[col (grid-opts {:span 1})]
-                                                      [col
-                                                       (grid-opts {:span 7}  {:padding-right "15px"})
-                                                       (str partner-title )]
-]
+                 (into [col (grid-opts {:span 24 })]
+                       (reduce
+                        (fn [c partner]
+                          (let [partner-title (:title (key partner))
+                                partner-periods {:periods (get (val partner) (data/partner-indicator-key impact i))}]
+                            (conj c (into [row (grid-opts {} {:width "100%"} "green")]
+                                          (periods [[col (grid-opts {:span 1})]
+                                                    [col
+                                                     (grid-opts {:span 7}  {
+                                                                            :font-size "13px"
+                                                                            :border-bottom "1px solid #EEE"
+                                                                            :margin-top "10px"
+                                                                            :margin-bottom "10px"
+                                                                           ;; :padding-right "15px"
+                                                                            })
+                                                     partner-title]
+                                                    ]
 
-                                                     partner-periods switches))])))
+                                                   partner-periods switches true)))))
 
-                         [[slist/list-item {:key (str (str "indicator-div-" item-id "-contributors")) :style {:width "100%"}}
-                           [row (grid-opts {} {:width "100%"} "pink")
-                            [col  (grid-opts {:span 1})]
-                            [col  (grid-opts {:span 23}) "Contributors"]]]] pd))]]]
+                        [[row (grid-opts {} {:width "100%"} "pink")
+                          [col  (grid-opts {:span 1})]
+                          [col  (grid-opts {:span 23} {:font-size "11px"
+                                                       :border-bottom "1px solid #EEE"
+                                                       :margin-top "10px"
+                                                       :margin-bottom "10px"}) "Contributors"]]] pd))]]
                )
          res)))
    (:indicators impact)))
@@ -173,33 +194,34 @@
            :style {:marginLeft "10px"}
            :on-change #(swap! view-db update-in [:switches :disaggregated?] not (js->clj %))
            :size "small"}]
-         ]
-        ]
+         ]]
        [row (grid-opts {:span 24} {} "cyan")
-        [col (grid-opts {:span 24})
-         (impacts-menu)]
-        ]
-       (into [:div {:style {:margin "20px"}}]
-             (let [option-selected (-> @view-db :menu :option-selected)
-                   outcome-selected (second (split option-selected #","))]
-               (impacts [] (filter #(and (= (first option-selected)  (:type %))
-                                         (or (nil? outcome-selected)
-                                             (= (util/to-int outcome-selected)
-                                                (data/outcome-level (:title %)))))
-                                   (get @data/db data/main-project)) @data/partners)))])))
+        [col (grid-opts {:span 24} {} "yellow")
+         (impacts-menu)]]
+       [row
+        (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
+              (let [option-selected (-> @view-db :menu :option-selected)
+                    outcome-selected (second (split option-selected #","))]
+                (impacts [] (filter #(and (= (first option-selected)  (:type %))
+                                          (or (nil? outcome-selected)
+                                              (= (util/to-int outcome-selected)
+                                                 (data/outcome-level (:title %)))))
+                                    (get @data/db data/main-project)) @data/partners)))]])))
   ([container topics partners-data]
    (reduce
     (fn [c impact]
-      (let [res [row (grid-opts {:span 24 :key (str (str "impact-div-" (:id impact))) } {:margin "20px"} "blue")
-                 (into [card {:title (:title impact) :style {:width "100%"}}]
-                       (into (let [i (first (:indicators impact))]
-                               [[slist/list {:key (str "impact-li-dates" (:id impact))}
-                                 [slist/list-item {:key (str (str "indicator-div-date" (:id impact))) :style {:width "100%"}}
-                                  (into [row (grid-opts {} {:width "100%"} "orange")]
-                                        (dates [[col (grid-opts {:span 8} {:padding-right "15px"}) ]] i))
-                                  ]]])
-                              [(impact-indicators impact partners-data (:switches @view-db))]))]]
+      (let [res [[row (grid-opts {:key (str (str "impact-div-1-" (:id impact))) } {:margin "20px"} "orange")
+                  [col (grid-opts {:span 24 :key (str (str "impact-div-1-" (:id impact))) } {} "orange")
+                   [:h3 (:title impact)]]
+                  ]
+                 [row (grid-opts {:span 24 :key (str (str "impact-div-" (:id impact))) } {:margin "20px"} "black")
+                  (into [col (grid-opts {:span 24 :key (str (str "impact-col-" (:id impact))) } {} "black")]
+                        (into (let [i (first (:indicators impact))]
+                                [(into [row (grid-opts {} {:width "100%" :margin-bottom "20px"} "orange")]
+                                       (dates [[col (grid-opts {:span 8} {:padding-right "15px"}) ]] i))
+                                 ])
+                              [(impact-indicators impact partners-data (:switches @view-db))]))]]]
         (if (:outputs impact)
-          (impacts (conj c res) (:outputs impact) partners-data)
-          (conj c res))))
+          (impacts (apply conj c res) (:outputs impact) partners-data)
+          (apply conj c res))))
     container topics)))
