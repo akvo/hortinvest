@@ -7,6 +7,7 @@ RUN set eux; \
         npm install -g shadow-cljs && \
         npm install && \
         curl -s https://download.clojure.org/install/linux-install-$CLOJURE_VER.sh | bash && \
+        # clojure -M:clj-kondo --lint src && \
         clojure -M:shadow-cljs release main && \
         mkdir -p release/js/main/ && \
         cp /app/resources/main/public/index.html ./release && \
