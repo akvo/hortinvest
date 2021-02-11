@@ -1,8 +1,10 @@
 (ns hortinvest.app
   (:require
+   [clojure.string :refer [includes?]]
    ["@sentry/browser" :as Sentry]
    ["@sentry/tracing" :as tracing :refer [Integrations]]
    [hortinvest.config :as config]
+   [hortinvest.util :as util]
    [hortinvest.ui :as ui]
    [hortinvest.ui2 :as ui2]
    [hortinvest.routes :as routes]
@@ -46,9 +48,10 @@
                (.getElementById js/document "app")))
 
 (defn init []
-  (Sentry/init (clj->js {:dsn "https://74a424e902fa437ab1a424ac2391ce07@o65834.ingest.sentry.io/5632052"
-                         :integrations [(new (. Integrations -BrowserTracing))]
-                         :tracesSampleRate 1.0}))
+  (when-not (includes? util/host "localhost")
+      (Sentry/init (clj->js {:dsn "https://74a424e902fa437ab1a424ac2391ce07@o65834.ingest.sentry.io/5632052"
+                          :integrations [(new (. Integrations -BrowserTracing))]
+                          :tracesSampleRate 1.0})))
   (case version
     1 (init-version-1)
     2 (init-version-2)))

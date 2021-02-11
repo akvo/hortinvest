@@ -173,7 +173,6 @@
 
 (defn find-indicator-with-more-periods [indicators]
   (reduce (fn [i1 i2]
-            (println (count (:periods i1)) (count (:periods i2)))
             (if (>= (count (:periods i1)) (count (:periods i2)))
               i1
               i2)) (first indicators) (next indicators)))
