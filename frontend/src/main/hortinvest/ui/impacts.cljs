@@ -170,6 +170,14 @@
          res)))
    (:indicators impact)))
 
+
+(defn find-indicator-with-more-periods [indicators]
+  (reduce (fn [i1 i2]
+            (println (count (:periods i1)) (count (:periods i2)))
+            (if (>= (count (:periods i1)) (count (:periods i2)))
+              i1
+              i2)) (first indicators) (next indicators)))
+
 (defn impacts
   ([]
    (util/track-page-view "results")
@@ -213,6 +221,7 @@
                                               (= (util/to-int outcome-selected)
                                                  (data/outcome-level (:title %)))))
                                     (get @data/db data/main-project)) @data/partners)))]])))
+
   ([container topics partners-data]
    (reduce
     (fn [c impact]
@@ -222,7 +231,7 @@
                   ]
                  [row (grid-opts {:span 24 :key (str (str "impact-div-" (:id impact))) } {:margin "20px"} "black")
                   (into [col (grid-opts {:span 24 :key (str (str "impact-col-" (:id impact))) } {} "black")]
-                        (into (let [i (first (:indicators impact))]
+                        (into (let [i (find-indicator-with-more-periods (:indicators impact))]
                                 [(into [row (grid-opts {} {:width "100%" :margin-bottom "20px"} "orange")]
                                        (dates [[col (grid-opts {:span 8} {:padding-right "15px"}) ]] i))
                                  ])
