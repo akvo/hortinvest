@@ -35,6 +35,14 @@ shadow-cljs - nREPL server started on port 50042
 Browse to http://localhost:8080/
 
 
+### Emacs Cider
+Example setup
+``` bash
+cat ~/.clojure.deps.edn
+{:aliases {:cider {:extra-deps {cider/cider-nrepl {:mvn/version "0.25.8"}}}}}
+clj -A:dev:cider -M:shadow-cljs watch main
+```
+
 ### Test production docker image.
 
 Build and run production image
