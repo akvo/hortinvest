@@ -1,0 +1,55 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: hortinvest-lumen-updates
+spec:
+  schedule: "0 0 * * 0"
+  startingDeadlineSeconds: 600 # it is ok to start the job 10 minutes late
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 10
+  successfulJobsHistoryLimit: 10
+  jobTemplate:
+    metadata:
+      labels:
+        cronjob: hortinvest-lumen-updates # <-- for monitoring
+        jobowner: tech-consultancy
+    spec:
+      backoffLimit: 6 # default
+      activeDeadlineSeconds: 900 # Fail job if it takes more than 15 mins
+      template:
+        metadata:
+          labels:
+            cronjob: hortinvest-lumen-updates
+        spec:
+          containers:
+          - name: hortinvest-lumen-updates
+            image: eu.gcr.io/akvo-lumen/hortinvest-lumen-updates:${TRAVIS_COMMIT}
+            resources:
+              requests:
+                cpu: "50m"
+                memory: "256Mi"
+              limits:
+                cpu: "1000m"
+                memory: "256Mi"
+            env:
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: tc-nabu-postgis
+                  key: client-id
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tc-nabu-postgis
+                  key: client-secret
+            - name: AUTH0_USER
+              valueFrom:
+                secretKeyRef:
+                  name: tc-nabu-postgis
+                  key: auth0-user
+            - name: AUTH0_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: tc-nabu-postgis
+                  key: auth0-pwd
+          restartPolicy: Never
