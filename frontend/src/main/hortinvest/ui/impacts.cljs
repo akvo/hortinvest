@@ -160,12 +160,7 @@
 
                                                    partner-periods switches true)))))
 
-                        [[row (grid-opts {} {:width "100%"} "pink")
-                          [col  (grid-opts {:span 1})]
-                          [col  (grid-opts {:span 23} {:font-size "11px"
-                                                       :border-bottom "1px solid #EEE"
-                                                       :margin-top "10px"
-                                                       :margin-bottom "10px"}) "Contributors"]]] pd))]]
+                        [] pd))]]
                )
          res)))
    (:indicators impact)))
