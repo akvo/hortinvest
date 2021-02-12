@@ -1,8 +1,19 @@
-# HortInvest Dashboard
+# HortInvest
 
-## development environment
+A dashboard consisting of a client application presenting data from Akvo Flow,
+Lumen & RSR.
 
-### dev webserver (mock rsr api)
+Development is done by local development without docker. Push to main will
+deploy to test. Run promote script to "release" to production.
+
+``` bash
+$ promote-test-to-prod.sh
+```
+
+## Local development
+Since the dashboard pulls data from Akvo RSR we have a remote mock API.
+
+### Mock RSR APi (webserver)
 using https://www.npmjs.com/package/http-server
 1. install it https://www.npmjs.com/package/http-server#installation
 2. go to the static json folder
@@ -23,14 +34,8 @@ shadow-cljs - nREPL server started on port 50042
 
 Browse to http://localhost:8080/
 
-## Release
 
-### Test
-Push to the main branch will deploy to the test environment.
-
-### Production
-...
-
+### Test production docker image.
 
 Build and run production image
 ``` bash
@@ -40,7 +45,7 @@ Build and run production image
 
 http://localhost:8080
 
-Stop docker container
+Stop & clean up
 ``` bash
 ./ci/stop.sh
 ```
