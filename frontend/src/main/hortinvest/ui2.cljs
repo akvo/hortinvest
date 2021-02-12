@@ -12,8 +12,8 @@
    [:h1 "404"]
    [:p "Not found"]])
 
-(defn root-page [m]
-  (util/redirect-to-default-page m))
+(defn root-page []
+  [util/Redirect {:to :impact}])
 
 (defn project-list-page [m]
   (util/redirect-to-default-page m))

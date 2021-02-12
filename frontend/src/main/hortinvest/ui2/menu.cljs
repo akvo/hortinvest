@@ -9,16 +9,16 @@
 
 (defn header-top-menu [app-state]
   (let [path (-> @app-state :route-match :path)
-        selected-key (if (.startsWith path "/results")
-                       "/results"
-                       "/projects")]
+        selected-key (if (.startsWith path "/projects")
+                       "/projects"
+                       "/results")]
     [menu {:mode "horizontal"
            :selectedKeys [selected-key]
            :theme "light"}
-     [menu-item {:key "/projects"}
-      [:a {:href (rfe/href :project-list)} "Projects"]]
      [menu-item {:key "/results"}
-      [:a {:href (rfe/href :impact)} "Results"]]]))
+      [:a {:href (rfe/href :impact)} "Results"]]
+     [menu-item {:key "/projects"}
+      [:a {:href (rfe/href :project-list)} "Projects"]]]))
 
 (defn project-menu-item [{:keys [id title]}]
   [menu-item {:key (str "/projects/" id)}
