@@ -23,7 +23,7 @@ spec:
         spec:
           containers:
           - name: hortinvest-lumen-updates
-            image: eu.gcr.io/akvo-lumen/hortinvest-lumen-updates:${TRAVIS_COMMIT}
+            image: eu.gcr.io/akvo-lumen/hortinvest-lumen-updates:${CI_COMMIT}
             resources:
               requests:
                 cpu: "50m"

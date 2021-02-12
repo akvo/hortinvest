@@ -28,6 +28,7 @@ blocks:
         - name: update-lumen docker build
           commands:
             - ./lumen-datasets-periodic-updates/ci/build-semaphore.sh
+            - ./lumen-datasets-periodic-updates/ci/deploy-semaphore.sh
   - name: "Promote to production"
     run:
       when: "tag =~ '.*'"
