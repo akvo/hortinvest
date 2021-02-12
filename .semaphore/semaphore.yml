@@ -25,10 +25,6 @@ blocks:
         commands:
           - checkout
       jobs:
-        - name: docker build
-          commands:
-            - ./ci/build.sh
-            - ./ci/deploy.sh
         - name: update-lumen docker build
           commands:
             - ./lumen-datasets-periodic-updates/ci/build-semaphore.sh
