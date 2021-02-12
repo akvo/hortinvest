@@ -34,22 +34,22 @@ spec:
             env:
             - name: CLIENT_ID
               valueFrom:
-                secretKeyRef:
-                  name: tc-nabu-postgis
-                  key: client-id
+                configMapKeyRef:
+                  name: akvo
+                  key: auth.public.client.id
             - name: CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: tc-nabu-postgis
-                  key: client-secret
+                  name: data-science
+                  key: auth0.client_secret
             - name: AUTH0_USER
               valueFrom:
                 secretKeyRef:
-                  name: tc-nabu-postgis
-                  key: auth0-user
+                  name: data-science
+                  key: auth0.user_email
             - name: AUTH0_PWD
               valueFrom:
                 secretKeyRef:
-                  name: tc-nabu-postgis
-                  key: auth0-pwd
+                  name: data-science
+                  key: auth0.user_password
           restartPolicy: Never
