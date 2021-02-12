@@ -12,7 +12,7 @@ if [ -z "$CI_COMMIT" ]; then
 fi
 
 log Creating Production image
-
-# docker build --rm=false -t "eu.gcr.io/${PROJECT_NAME}/hortinvest-lumen-updates:${CI_COMMIT}" .
+cd lumen-datasets-periodic-updates
+docker build --rm=false -t "eu.gcr.io/${PROJECT_NAME}/hortinvest-lumen-updates:${CI_COMMIT}" .
 
 log Done
