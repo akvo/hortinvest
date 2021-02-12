@@ -41,23 +41,25 @@
 (defn results-page []
   [util/Redirect {:to :impact}])
 
-(defn impact-page []
-  [:div [:h2 "Impacts"]])
+#_(defn impact-page []
+    [:div [:h2 "Impacts"]])
 
 (defn outcome-list-page []
   [util/Redirect {:to :outcome
                   :path-params {:id 1}}])
 
-(defn outcome-page [{:keys [path-params]}]
-  (let [{:keys [id]} path-params]
-    [:div [:h2 (str "Outcome " id)]]))
+#_(defn outcome-page [{:keys [path-params]}]
+    (let [{:keys [id]} path-params]
+      [:div [:h2 (str "Outcome " id)]]))
 
 (defn content [app-state]
   [layout-content {:class "site-layout"
-                   :style {:marginTop 140}}
-   (let [match (:route-match @app-state)]
-     (when match
-       [(-> match :data :view) match app-state]))])
+                   :style {:padding "0 50px"
+                           :marginTop 120}}
+   [:div {:class "site-layout-background"}
+    (let [match (:route-match @app-state)]
+      (when match
+        [(-> match :data :view) match app-state]))]])
 
 (defn root [app-state]
   [layout

@@ -44,7 +44,8 @@
     [:div
      [:div {:class "ant-menu-horizontal"
             :style {:float "right"
-                    :lineHeight "32px"}}
+                    :lineHeight "32px"
+                    :borderBottom "0"}}
       [:div {:style {:marginRight "10px"}}
        [:span  "Percentages"]
        [switch/switch
@@ -62,7 +63,8 @@
        ]]
      [menu {:mode "horizontal"
             :selectedKeys [(-> state :route-match :path)]
-            :style {:line-height "32px"}
+            :style {:line-height "32px"
+                    :border-bottom-color "#fff"}
             :theme "light"}
       [menu-item {:key "/results/impact"}
        [:a {:href (rfe/href :impact)} "Impact"]]

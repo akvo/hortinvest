@@ -264,7 +264,7 @@
     (api-error)
     (when (and (not (empty? (get @data/db data/main-project)))
                (= 5 (count @data/partners)))
-      [:div
+      [:div {:style {:padding "20px 0"}}
        [row
         (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
               (let [;; option-selected (-> @view-db :menu :option-selected)
