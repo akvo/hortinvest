@@ -216,12 +216,15 @@
          (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
                (let [option-selected (-> @view-db :menu :option-selected)
                      outcome-selected (second (split option-selected #","))]
-                 (impacts [] (filter #(and (= (first option-selected)  (:type %))
-                                           (or (nil? outcome-selected)
-                                               (= (util/to-int outcome-selected)
-                                                  (data/outcome-level (:title %)))))
-                                     (get @data/db data/main-project)) @data/partners)))]])))
-  ([m app-state]
+                 (impacts []
+                          (filter #(and (= (first option-selected)  (:type %))
+                                        (or (nil? outcome-selected)
+                                            (= (util/to-int outcome-selected)
+                                               (data/outcome-level (:title %)))))
+                                  (get @data/db data/main-project))
+                          @data/partners
+                          (:switches @view-db))))]])))
+  ([m app-state] ;; ui2
    (util/track-page-view "results")
    (if (seq @data/api-error)
      (api-error)
@@ -230,17 +233,13 @@
        [:div
         [row
          (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
-               (let [option-selected (-> @view-db :menu :option-selected)
-                     outcome-selected (second (split option-selected #","))]
-                 (impacts []
-                          (filter #(and (= (first option-selected)  (:type %))
-                                        (or (nil? outcome-selected)
-                                            (= (util/to-int outcome-selected)
-                                               (data/outcome-level (:title %)))))
-                                  (get @data/db data/main-project))
-                          @data/partners)))]])))
+               (impacts []
+                        (filter #(= "3" (:type %))
+                                (get @data/db data/main-project))
+                        @data/partners
+                        (:switches @app-state)))]])))
 
-  ([container topics partners-data]
+  ([container topics partners-data switches]
    (reduce
     (fn [c impact]
       (let [res [[row (grid-opts {:key (str (str "impact-div-1-" (:id impact))) } {:margin "20px"} "orange")
@@ -253,9 +252,9 @@
                                 [(into [row (grid-opts {} {:width "100%" :margin-bottom "20px"} "orange")]
                                        (dates [[col (grid-opts {:span 8} {:padding-right "15px"}) ]] i))
                                  ])
-                              [(impact-indicators impact partners-data (:switches @view-db))]))]]]
+                              [(impact-indicators impact partners-data switches)]))]]]
         (if (:outputs impact)
-          (impacts (apply conj c res) (:outputs impact) partners-data)
+          (impacts (apply conj c res) (:outputs impact) partners-data switches)
           (apply conj c res))))
     container topics)))
 
@@ -268,7 +267,7 @@
       [:div
        [row
         (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
-              (let [option-selected (-> @view-db :menu :option-selected)
+              (let [;; option-selected (-> @view-db :menu :option-selected)
                     option-selected (str  "2," (:id path-params))
                     outcome-selected (second (split option-selected #","))]
                 (impacts []
@@ -277,6 +276,7 @@
                                            (= (util/to-int outcome-selected)
                                               (data/outcome-level (:title %)))))
                                  (get @data/db data/main-project))
-                         @data/partners)))]])
+                         @data/partners
+                         (:switches @app-state))))]])
     )
   )
