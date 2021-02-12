@@ -28,6 +28,7 @@ blocks:
         - name: docker build
           commands:
             - ./ci/build.sh
+            - ./lumen-datasets-periodic-updates/ci/build-semaphore.sh
             - ./ci/deploy.sh
   - name: "Promote to production"
     run:
