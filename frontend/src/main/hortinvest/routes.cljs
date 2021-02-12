@@ -14,5 +14,5 @@
     ["/impact" {:name :impact :view impacts/impacts}]
     ["/outcomes"
      ["" {:name :outcome-list :view ui2/outcome-list-page}]
-     ["/:id" {:name :outcome :view ui2/outcome-page}]]]
+     ["/:id" {:name :outcome :view impacts/outcomes}]]]
    ["/{*path}" {:name :not-found-page :view ui2/not-found-page}]])

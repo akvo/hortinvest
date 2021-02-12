@@ -51,9 +51,9 @@
 
 (defn init []
   (when-not (includes? util/host "localhost")
-      (Sentry/init (clj->js {:dsn "https://74a424e902fa437ab1a424ac2391ce07@o65834.ingest.sentry.io/5632052"
-                          :integrations [(new (. Integrations -BrowserTracing))]
-                          :tracesSampleRate 1.0})))
+    (Sentry/init (clj->js {:dsn "https://74a424e902fa437ab1a424ac2391ce07@o65834.ingest.sentry.io/5632052"
+                           :integrations [(new (. Integrations -BrowserTracing))]
+                           :tracesSampleRate 1.0})))
   (case version
     1 (init-version-1)
     2 (init-version-2)))

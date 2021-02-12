@@ -34,7 +34,7 @@
        (project-menu-item config))]))
 
 (defn outcome-menu-item [{:keys [id title]}]
-  [menu-item {:key (str "/results/outcome/" id)}
+  [menu-item {:key (str "/results/outcomes/" id)}
    [:a {:href (rfe/href :outcome {:id id})} title]])
 
 (defn results-menu [app-state]

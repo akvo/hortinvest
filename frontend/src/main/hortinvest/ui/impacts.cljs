@@ -205,7 +205,6 @@
       :size "small"}]
     ]])
 
-
 (defn impacts
   ([]
    (util/track-page-view "results")
@@ -264,3 +263,25 @@
           (impacts (apply conj c res) (:outputs impact) partners-data)
           (apply conj c res))))
     container topics)))
+
+(defn outcomes [{:keys [path-params]} app-state]
+  (util/track-page-view "results")
+  (if (seq @data/api-error)
+    (api-error)
+    (when (and (not (empty? (get @data/db data/main-project)))
+               (= 5 (count @data/partners)))
+      [:div
+       [row
+        (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
+              (let [option-selected (-> @view-db :menu :option-selected)
+                    option-selected (str  "2," (:id path-params))
+                    outcome-selected (second (split option-selected #","))]
+                (impacts []
+                         (filter #(and (= (first option-selected)  (:type %))
+                                       (or (nil? outcome-selected)
+                                           (= (util/to-int outcome-selected)
+                                              (data/outcome-level (:title %)))))
+                                 (get @data/db data/main-project))
+                         @data/partners)))]])
+    )
+  )
