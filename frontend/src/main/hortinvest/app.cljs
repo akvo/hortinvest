@@ -14,8 +14,8 @@
    [reitit.frontend.easy :as rfe]))
 
 
-(def version 1)
-;; (def version 2)
+;; (def version 1)
+(def version 2)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Version 1
