@@ -11,6 +11,3 @@ cd frontend
 docker build \
        --tag "${image_prefix}/frontend:latest" \
        --tag "${image_prefix}/frontend:${CI_COMMIT}" .
-
-cd ../lumen-datasets-periodic-updates
-./ci/build.sh
