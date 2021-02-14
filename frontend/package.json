@@ -3,14 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
+    "karma": "^6.1.1",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-cljs-test": "^0.1.0",
+    "puppeteer": "^7.1.0",
     "shadow-cljs": "2.11.15"
   },
   "dependencies": {
-    "antd": "^4.11.2",
-    "npm": "^6.14.11",
-    "react": "^17.0.1",
     "@sentry/browser": "6.1.0",
     "@sentry/tracing": "6.1.0",
+    "antd": "^4.11.2",
+    "react": "^17.0.1",
     "react-dom": "17.0.1"
   }
 }

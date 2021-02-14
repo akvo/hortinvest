@@ -1,13 +1,17 @@
-FROM node:alpine AS cljs-builder
+FROM node:lts-alpine3.13 as cljs-builder
 ENV CLOJURE_VER=1.10.2.774
+ENV CHROME_BIN=/usr/bin/chromium-browser
 WORKDIR /app
 COPY . /app
 RUN set eux; \
-        apk add --update --no-cache openjdk8 openssl bash curl && \
-        npm install -g shadow-cljs && \
+        apk add --update --no-cache openjdk8 openssl bash curl chromium && \
+        npm i npm@6.13.7 && \
+        npm install -g shadow-cljs karma-cli && \
         npm install && \
         curl -s https://download.clojure.org/install/linux-install-$CLOJURE_VER.sh | bash && \
         # clojure -M:clj-kondo --lint src && \
+        clojure -A:test -M:shadow-cljs compile ci && \
+        karma start --single-run && \
         clojure -M:shadow-cljs release main && \
         mkdir -p release/js/main/ && \
         cp /app/resources/main/public/index.html ./release && \

@@ -8,4 +8,14 @@
                  :modules {:main {:init-fn hortinvest.app/init
                                   :entries [hortinvest.app]}}
                  :devtools   {:after-load hortinvest.app/init}
-                 :release {:compiler-options {:optimizations :advanced}}}}}
+                 :release {:compiler-options {:optimizations :advanced}}}
+          :test {:target :browser-test
+                 :test-dir "resources/public/js/test"
+                 ;; :runner-ns tests.client-test-main
+                 :devtools {:http-port 8021
+                            :http-root "resources/public/js/test"}}
+          :ci {:target :karma
+               ;; :output-to "target/ci.js"
+               :output-to "resources/public/js/ci/main.js"
+               }
+          }}
