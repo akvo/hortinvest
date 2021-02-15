@@ -57,3 +57,15 @@ Stop & clean up
 ``` bash
 ./ci/stop.sh
 ```
+
+## Auto update lumen datasets
+
+There is a K8s cron job logic in this [folder/branch](https://github.com/akvo/hortinvest/tree/automatic-updates/lumen-datasets-periodic-updates)
+
+To be deployed we just need to commit to this [branch](https://github.com/akvo/hortinvest/tree/automatic-updates/)
+
+The deployment is in production
+
+In this [lines](https://github.com/akvo/hortinvest/blob/automatic-updates/lumen-datasets-periodic-updates/update.py#L25-L37) is the list of datasets to be updated
+
+The current periodicity is [daily](https://github.com/akvo/hortinvest/commit/8833123c3aaa3b68adc20a7d2cab546bfb029f7b)
