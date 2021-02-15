@@ -1,4 +1,4 @@
-# HortInvest
+# Hortinvest
 
 A dashboard consisting of a client application presenting data from Akvo Flow,
 Lumen & RSR.
