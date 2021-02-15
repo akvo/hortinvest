@@ -28,10 +28,10 @@ gcloud config set container/use_client_certificate False
 #    log Project not deployed to production cluster. Exiting now.
 #    exit 0
 #else
-if [[ "${CI_BRANCH}" == "automatic-updates"]]; then
-    log Environement is test
-    gcloud container clusters get-credentials test
-fi
+
+log Environement is production
+gcloud container clusters get-credentials production
+
 #fi
 
 log Pushing images
