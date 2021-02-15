@@ -23,7 +23,18 @@ token_data = {
 
 # Form - dataset mapping
 table_dataset = {
+    'Business Cases Registration Form NEW': '601bea24-4aed-45fc-b0bd-0a0d7f9c70cf',
+    'Event Form': '600ec633-f22e-4751-a96d-16a99c47ca44',
+    'Training Attendance registry NEW': '60227d15-1943-42f5-972a-65b29de5864e',
+    'Sales Data (After Harvesting and Selling) - NEW - MF to Production': '60227d8f-a538-4b6a-b67f-4da3a469d6e2',
+    'Meetings / Workshop Attendance form NEW': '60227ca4-5d8b-4257-9ec3-dde1656e66de',
+    'Demo Site Form NEW': '60226db0-1f87-4bc6-8478-a1c534e27905',
+    'Farmer Group Form NEW': '60212e22-55a2-426d-bea3-6002e7acb145',
+    'Fruit Trees and Seed Distribution Form NEW RF': '60211e1b-d97c-4fab-8414-8a635dbede7c',
+    'SME/Company Form NEW': '60224456-7486-4e3b-badc-06d1bb1aebdd',
     'Fruit trees & Seed distribution - MF': '6022a14a-9a9d-4025-8c90-cb72cedcb1a6',
+    'Production Data Form (After Planting Period) NEW - RF': '60227d54-e40e-4433-89c7-4d39e7ec7cd4',
+    'Cooperative Registration Form NEW': '601c0770-05a4-4281-8fae-b1b959a01b45',
 }
 
 
