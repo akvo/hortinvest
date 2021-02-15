@@ -9,7 +9,7 @@ RUN set eux; \
         npm install -g shadow-cljs karma-cli && \
         npm install && \
         curl -s https://download.clojure.org/install/linux-install-$CLOJURE_VER.sh | bash && \
-        # clojure -M:clj-kondo --lint src && \
+        clojure -M:clj-kondo --lint src && \
         clojure -A:test -M:shadow-cljs compile ci && \
         karma start --single-run && \
         clojure -M:shadow-cljs release main && \
