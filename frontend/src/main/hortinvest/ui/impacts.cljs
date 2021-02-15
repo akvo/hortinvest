@@ -7,14 +7,12 @@
    [cljs-time.format :refer (formatter parse unparse)]
    [reagent.core :as r]
    [goog.string :as gstring]
-   [syn-antd.card :refer  [card]]
    [syn-antd.result :refer  [result]]
    [syn-antd.col :refer [col]]
    [syn-antd.switch :as switch]
-   [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
-   [syn-antd.progress :refer [progress]]
+   [syn-antd.menu :refer [menu menu-item]]
    [syn-antd.row :refer [row]]
-   [syn-antd.typography :refer [typography-text typography-title]]))
+   [syn-antd.typography :refer [typography-text]]))
 
 (def data-date-formatter (formatter "yyyy-MM-dd"))
 (def view-date-formatter (formatter "dd MMM yyyy"))
@@ -46,7 +44,7 @@
                       :menu {:option-selected initial-menu-option}}))
 
 (defn menu-change [view-db event]
-  (let [{:strs [key] :as a} (js->clj event)]
+  (let [{:strs [key]} (js->clj event)]
     (when (not= key (-> @view-db :menu :option-selected))
       (swap! view-db assoc-in [:menu :option-selected] key))))
 
@@ -75,63 +73,63 @@
 
 (defn dates [r i]
   (let [periods (:periods i)
-        empty-cols (- 4 (count periods))]
-    (let [res (reduce (fn [c p]
-                        (conj c [col (grid-opts {:span 4} {:fontSize "11px" :textAlign "center" :whiteSpace "nowrap"} "black")
-                                 (str (format-date (:period_start p)) " - " (format-date (:period_end p)))]))
-                      r periods )]
-      (if (pos? empty-cols)
-        (into res (vec (repeat empty-cols [col (grid-opts {:span 4}) ""])))
-        res))))
+        empty-cols (- 4 (count periods))
+        res (reduce (fn [c p]
+                      (conj c [col (grid-opts {:span 4} {:fontSize "11px" :textAlign "center" :whiteSpace "nowrap"} "black")
+                               (str (format-date (:period_start p)) " - " (format-date (:period_end p)))]))
+                    r periods )]
+    (if (pos? empty-cols)
+      (into res (vec (repeat empty-cols [col (grid-opts {:span 4}) ""])))
+      res)))
 
 (defn periods [r i switches & [contributors?]]
   (let [periods (:periods i)
-        empty-cols (- 4 (count periods))]
-    (let [res (reduce (fn [c p]
-                        (let [target (period-value (:target_value p))
-                              actual (period-value (:actual_value p))
-                              percent (util/nan (util/to-int (* (/ actual target) 100)))]
-                          (conj c [col (grid-opts {:span 4}  (when contributors?
-                                                               {:border-bottom "1px solid #EEE"
-                                                                :margin-bottom "10px"}))
-                                   (if contributors?
-                                     [row (grid-opts {}  {:font-size "11px"
-                                                          :margin-top "10px"}
-                                                     "green")
-                                      [col (grid-opts {:span 12} {:textAlign "right"} "red")
-                                       (int-comma actual)]
-                                      [col (grid-opts {:span 12})]]
-                                     [row (grid-opts {}  (merge
-                                                          {:font-size "11px"
-                                                           :margin-top "10px"}
-                                                          (when contributors?
-                                                            {:border-bottom "1px solid #EEE"
-                                                             :margin-bottom "10px"})) "green")
-                                      [col (grid-opts {:span 12} {:textAlign "right"} "red")
-                                       (int-comma actual)
-                                       [:br]
-                                       (int-comma target)]
-                                      [col (grid-opts {:span 1})]
-                                      [col (grid-opts {:span 11} {:padding "10px"} "blue")
-                                       (when (-> switches :percentages?) [dot {:percent percent :style {:whiteSpace "nowrap"}}])]
+        empty-cols (- 4 (count periods))
+        res (reduce (fn [c p]
+                      (let [target (period-value (:target_value p))
+                            actual (period-value (:actual_value p))
+                            percent (util/nan (util/to-int (* (/ actual target) 100)))]
+                        (conj c [col (grid-opts {:span 4}  (when contributors?
+                                                             {:border-bottom "1px solid #EEE"
+                                                              :margin-bottom "10px"}))
+                                 (if contributors?
+                                   [row (grid-opts {}  {:font-size "11px"
+                                                        :margin-top "10px"}
+                                                   "green")
+                                    [col (grid-opts {:span 12} {:textAlign "right"} "red")
+                                     (int-comma actual)]
+                                    [col (grid-opts {:span 12})]]
+                                   [row (grid-opts {}  (merge
+                                                        {:font-size "11px"
+                                                         :margin-top "10px"}
+                                                        (when contributors?
+                                                          {:border-bottom "1px solid #EEE"
+                                                           :margin-bottom "10px"})) "green")
+                                    [col (grid-opts {:span 12} {:textAlign "right"} "red")
+                                     (int-comma actual)
+                                     [:br]
+                                     (int-comma target)]
+                                    [col (grid-opts {:span 1})]
+                                    [col (grid-opts {:span 11} {:padding "10px"} "blue")
+                                     (when (-> switches :percentages?) [dot {:percent percent :style {:whiteSpace "nowrap"}}])]
 
 
-                                      ])])))
-                      r periods )]
-      (if (pos? empty-cols)
-        (into res (vec (repeat empty-cols [col (grid-opts {:span 4} (merge
-                                                                     {}
-                                                                     (when contributors?
-                                                                       {:border-bottom "1px solid #EEE"
-                                                                        :margin-bottom "10px"}))) ""])))
-        res))))
+                                    ])])))
+                    r periods )]
+    (if (pos? empty-cols)
+      (into res (vec (repeat empty-cols [col (grid-opts {:span 4} (merge
+                                                                   {}
+                                                                   (when contributors?
+                                                                     {:border-bottom "1px solid #EEE"
+                                                                      :margin-bottom "10px"}))) ""])))
+      res)))
 
 (defn impact-indicators [impact partners-data switches]
   (map-indexed
    (fn [item-id i]
      (let [res (into [row (grid-opts {:key (str "impact-li" (:id impact) item-id)} {:margin-bottom "20px"} "red")]
                      (periods [[col (grid-opts {:span 8} {:padding-right "15px"}) (:title i)]] i switches))]
-       (if-let [pd (and (:disaggregated? switches) (seq (filter (fn [[k v]]
+       (if-let [pd (and (:disaggregated? switches) (seq (filter (fn [[_ v]]
                                                                   (->>
                                                                    (get v (data/partner-indicator-key impact i))
                                                                    ;; TODO enable if we want to hide contributors with 0 as actual_value
@@ -153,7 +151,7 @@
                                                                             :border-bottom "1px solid #EEE"
                                                                             :margin-top "10px"
                                                                             :margin-bottom "10px"
-                                                                           ;; :padding-right "15px"
+                                                                            ;; :padding-right "15px"
                                                                             })
                                                      partner-title]
                                                     ]
@@ -205,7 +203,7 @@
    (util/track-page-view "results")
    (if (seq @data/api-error)
      (api-error)
-     (when (and (not (empty? (get @data/db data/main-project)))
+     (when (and (seq (get @data/db data/main-project))
                 (= 5 (count @data/partners)))
        [:div
         (switch-menu)
@@ -224,11 +222,11 @@
                                   (get @data/db data/main-project))
                           @data/partners
                           (:switches @view-db))))]])))
-  ([m app-state] ;; ui2
+  ([_ app-state] ;; ui2
    (util/track-page-view "results")
    (if (seq @data/api-error)
      (api-error)
-     (when (and (not (empty? (get @data/db data/main-project)))
+     (when (and (seq (get @data/db data/main-project))
                 (= 5 (count @data/partners)))
        [:div
         [row
@@ -262,13 +260,12 @@
   (util/track-page-view "results")
   (if (seq @data/api-error)
     (api-error)
-    (when (and (not (empty? (get @data/db data/main-project)))
+    (when (and (seq (get @data/db data/main-project))
                (= 5 (count @data/partners)))
       [:div {:style {:padding "20px 0"}}
        [row
         (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
-              (let [;; option-selected (-> @view-db :menu :option-selected)
-                    option-selected (str  "2," (:id path-params))
+              (let [option-selected (str  "2," (:id path-params))
                     outcome-selected (second (split option-selected #","))]
                 (impacts []
                          (filter #(and (= (first option-selected)  (:type %))
@@ -277,6 +274,4 @@
                                               (data/outcome-level (:title %)))))
                                  (get @data/db data/main-project))
                          @data/partners
-                         (:switches @app-state))))]])
-    )
-  )
+                         (:switches @app-state))))]])))
