@@ -3,7 +3,6 @@
   (:require
    [cljs.core.async :refer [<! chan >!]]
    [clojure.string :refer [triml split]]
-   [hortinvest.util :as util]
    [hortinvest.api :as api]
    [reagent.core :as r]))
 
@@ -74,7 +73,7 @@
 
 (let [loaded (atom 0)]
   (go-loop []
-    (let [data (<! control-chan)]
+    (let [_ (<! control-chan)]
       (swap! loaded inc)
       (if (= (count project-ids) @loaded)
         (load-partners)
@@ -99,7 +98,7 @@
              periods (<! (read-chan periods-chan))
              indicators (<! (read-chan indicators-chan))
              projects (<! (read-chan projects-chan))]
-         (if (and periods indicators projects)
+         (when (and periods indicators projects)
            (let [parsed-indicators (parse-indicators indicators periods)
                  projects-parsed (parse-projects projects parsed-indicators)
                  projects-by-type (group-by :type  projects-parsed)
