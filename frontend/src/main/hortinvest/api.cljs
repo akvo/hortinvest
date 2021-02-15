@@ -2,7 +2,7 @@
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require
    [clojure.string :refer [includes?]]
-   [cljs.core.async :refer [<! chan >!]]
+   [cljs.core.async :refer [<!]]
    [cljs-http.client :as http]
    [hortinvest.util :as util]))
 
