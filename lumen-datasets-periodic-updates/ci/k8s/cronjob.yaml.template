@@ -40,16 +40,16 @@ spec:
             - name: CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: data-science
+                  name: lumen-auto-refresh
                   key: auth0.client_secret
             - name: AUTH0_USER
               valueFrom:
                 secretKeyRef:
-                  name: data-science
-                  key: auth0.user_email
+                  name: lumen-auto-refresh
+                  key: user
             - name: AUTH0_PWD
               valueFrom:
                 secretKeyRef:
-                  name: data-science
-                  key: auth0.user_password
+                  name: lumen-auto-refresh
+                  key: password
           restartPolicy: Never

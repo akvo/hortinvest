@@ -8,9 +8,9 @@ function log {
 
 export PROJECT_NAME=akvo-lumen
 
-#if [[ "${TRAVIS_BRANCH}" != "develop" ]] && [[ "${TRAVIS_BRANCH}" != "master" ]]; then
-#    exit 0
-#fi
+if [[ "${CI_BRANCH}" != "automatic-updates" ]]; then
+    exit 0
+fi
 
 #if [[ "${TRAVIS_PULL_REQUEST}" != "false" ]]; then
 #    exit 0
@@ -28,8 +28,10 @@ gcloud config set container/use_client_certificate False
 #    log Project not deployed to production cluster. Exiting now.
 #    exit 0
 #else
+if [[ "${CI_BRANCH}" == "automatic-updates"]]; then
     log Environement is test
     gcloud container clusters get-credentials test
+fi
 #fi
 
 log Pushing images
