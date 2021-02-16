@@ -4,6 +4,7 @@
    [cljs.core.async :refer [<! chan >!]]
    [clojure.string :refer [triml split]]
    [hortinvest.api :as api]
+   [hortinvest.config :refer [main-project project-ids]]
    [reagent.core :as r]))
 
 (def db (r/atom {}))
@@ -28,20 +29,7 @@
 ;;  (assert (= 1 (outcome-level "1.3.4 Trained RAB 88989")))
 ;;  (assert (= 5 (outcome-level "5.3.4 Trained RAB 88989")))
 
-(def main-project {:title "Hortinvest (Original)"
-                   :id 7218})
 
-(def project-ids [main-project
-                  {:title "SNV Rwanda - HortInvest"
-                   :id 9559}
-                  {:title "Holland Greentech / MACAMPO - HortInvest"
-                   :id 9558}
-                  {:title "IDH Sustainable Trade Initiative - HortInvest"
-                   :id 9557}
-                  {:title "Wageningen University & Research - HortInvest"
-                   :id 9556}
-                  {:title "Agriterra - HortInvest"
-                   :id 9555}])
 
 (defn partner-indicator-key [impact indicator]
   (str (:title impact) "- - - - -" (:title indicator)))

@@ -1,5 +1,7 @@
 (ns hortinvest.config)
 
+
+
 (def dashboard-config
   [{:height "1000"
     :id "1"
@@ -56,6 +58,22 @@
    {:title "Outcome 4"
     :id "4"}])
 
+(def main-project {:title "Hortinvest (Original)"
+                   :id 7218})
+
+(def project-ids [main-project
+                  {:title "SNV Rwanda - HortInvest"
+                   :id 9559}
+                  {:title "Holland Greentech / MACAMPO - HortInvest"
+                   :id 9558}
+                  {:title "IDH Sustainable Trade Initiative - HortInvest"
+                   :id 9557}
+                  {:title "Wageningen University & Research - HortInvest"
+                   :id 9556}
+                  {:title "Agriterra - HortInvest"
+                   :id 9555}])
 (def config
   {:projects dashboard-config
-   :results {:outcomes outcomes}})
+   :results {:main-project main-project
+             :outcomes outcomes
+             :project-ids project-ids}})

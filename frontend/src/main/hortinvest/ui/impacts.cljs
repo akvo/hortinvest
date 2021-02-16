@@ -3,6 +3,7 @@
    [clojure.string :refer [replace trim split upper-case]]
    [cljs.pprint :refer [cl-format]]
    [hortinvest.ui.impacts-data :as data]
+   [hortinvest.config :as config]
    [hortinvest.util :as util :refer [grid-opts]]
    [cljs-time.format :refer (formatter parse unparse)]
    [goog.string :as gstring]
@@ -160,14 +161,14 @@
    (util/track-page-view "results")
    (if (seq @data/api-error)
      (api-error)
-     (when (and (seq (get @data/db data/main-project))
+     (when (and (seq (get @data/db config/main-project))
                 (= 5 (count @data/partners)))
        [:div
         [row
          (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
                (impacts []
                         (filter #(= "3" (:type %))
-                                (get @data/db data/main-project))
+                                (get @data/db config/main-project))
                         @data/partners
                         (:switches @app-state)))]])))
 
@@ -194,7 +195,7 @@
   (util/track-page-view "results")
   (if (seq @data/api-error)
     (api-error)
-    (when (and (seq (get @data/db data/main-project))
+    (when (and (seq (get @data/db config/main-project))
                (= 5 (count @data/partners)))
       [:div {:style {:padding "20px 0"}}
        [row
@@ -206,6 +207,6 @@
                                        (or (nil? outcome-selected)
                                            (= (util/to-int outcome-selected)
                                               (data/outcome-level (:title %)))))
-                                 (get @data/db data/main-project))
+                                 (get @data/db config/main-project))
                          @data/partners
                          (:switches @app-state))))]])))
