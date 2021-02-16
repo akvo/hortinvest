@@ -1,46 +1,67 @@
 (ns hortinvest.ui
   (:require
-   [hortinvest.ui.impacts :as i]
-   [hortinvest.ui.projects :refer [projects]]
-   [hortinvest.util :as util]
-   [syn-antd.menu :refer [menu menu-item menu-sub-menu]]
-   [syn-antd.layout :refer [layout layout-header layout-content]]))
+   [hortinvest.ui.menu :as menu]
+   [hortinvest.ui.util :as util]
+   [syn-antd.col :refer [col]]
+   [syn-antd.row :refer [row]]
+   [syn-antd.layout :refer [layout layout-content]]))
 
 
-(defn header-menu [app-state]
-  [menu {:theme "dark"
-         :mode "horizontal"
-         :defaultSelectedKeys (-> @app-state :current-page first)
-         :onClick #(util/menu-change app-state %)}
-   [menu-item {:key "results"} "Results"]
-   (reduce (fn [menu {:keys [id title]}]
-             (conj menu
-                   [menu-item {:key id} title]))
-           [menu-sub-menu {:key "projects" :title "Projects"}]
-           (-> @app-state :projects :config))])
+(defn not-found-page []
+  [:div
+   [:h1 "404"]
+   [:p "Not found"]])
 
-(defn header [app-state]
-  [layout-header
-   {:style {:position "fixed"
-            :zIndex 1
-            :width "100%"}}
-   [:div {:class "logo"} [:h1 "Hortinvest"]]
-   [header-menu app-state]])
+(defn root-page []
+  [util/Redirect {:to :impact}])
+
+(defn project-list-page [m]
+  (util/redirect-to-default-page m))
+
+(defn project-page
+  [{:keys [data path-params]} _]
+  (let [id (:id path-params)
+        {:keys [src height]} (first (filter #(= id (:id %))
+                                            (-> data :config :projects)))]
+    [:div
+     [row
+      [col {:span 24}
+       [:iframe {:allow "encrypted-media"
+                 :frameBorder "0"
+                 :height height
+                 :onLoad #(js/setTimeout (fn []
+                                           (.scroll js/window
+                                                    (clj->js {:behaviour "smooth"
+                                                              :left 0
+                                                              :top 0})))
+                                         1000)
+                 :src src
+                 :width "100%"}]]]]))
+
+(defn results-page []
+  [util/Redirect {:to :impact}])
+
+#_(defn impact-page []
+    [:div [:h2 "Impacts"]])
+
+(defn outcome-list-page []
+  [util/Redirect {:to :outcome
+                  :path-params {:id 1}}])
+
+#_(defn outcome-page [{:keys [path-params]}]
+    (let [{:keys [id]} path-params]
+      [:div [:h2 (str "Outcome " id)]]))
 
 (defn content [app-state]
   [layout-content {:class "site-layout"
                    :style {:padding "0 50px"
-                           :marginTop 64}}
-   [:div {:class "site-layout-background"
-          :style {:padding 24
-                  :minHeight 380}}
-    (case (-> @app-state :current-page last)
-      "results" (do
-                  (i/load-projects)
-                  [i/impacts])
-      (projects app-state))]])
+                           :marginTop 120}}
+   [:div {:class "site-layout-background"}
+    (let [match (:route-match @app-state)]
+      (when match
+        [(-> match :data :view) match app-state]))]])
 
 (defn root [app-state]
   [layout
-   [header app-state]
+   [menu/header app-state]
    [content app-state]])

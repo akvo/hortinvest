@@ -1,4 +1,4 @@
-(ns hortinvest.ui2.menu
+(ns hortinvest.ui.menu
   (:require
    [hortinvest.ui.impacts :as i]
    [reitit.frontend.easy :as rfe]

@@ -1,4 +1,4 @@
-(ns hortinvest.ui2.util
+(ns hortinvest.ui.util
   (:require
    [reagent.core :as r]
    [reitit.frontend.easy :as rfe]))
