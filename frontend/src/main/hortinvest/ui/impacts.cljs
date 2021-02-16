@@ -5,12 +5,9 @@
    [hortinvest.ui.impacts-data :as data]
    [hortinvest.util :as util :refer [grid-opts]]
    [cljs-time.format :refer (formatter parse unparse)]
-   [reagent.core :as r]
    [goog.string :as gstring]
    [syn-antd.result :refer  [result]]
    [syn-antd.col :refer [col]]
-   [syn-antd.switch :as switch]
-   [syn-antd.menu :refer [menu menu-item]]
    [syn-antd.row :refer [row]]
    [syn-antd.typography :refer [typography-text]]))
 
@@ -37,27 +34,10 @@
                                :whiteSpace "nowrap"}}
       (str percent "%")])])
 
-(def initial-menu-option ["3"])
-
-(def view-db (r/atom {:switches {:percentages? true
-                                 :disaggregated? false}
-                      :menu {:option-selected initial-menu-option}}))
-
 (defn menu-change [view-db event]
   (let [{:strs [key]} (js->clj event)]
     (when (not= key (-> @view-db :menu :option-selected))
       (swap! view-db assoc-in [:menu :option-selected] key))))
-
-(defn impacts-menu []
-  [menu {:mode "horizontal"
-         :defaultSelectedKeys initial-menu-option ;;(-> @app-state :current-page first)
-         :onClick #(menu-change view-db %)}
-   [menu-item {:key ["3"]} "Impact"]
-   [menu-item {:key ["2" "1"]} "Outcome 1"]
-   [menu-item {:key ["2" "2"]} "Outcome 2"]
-   [menu-item {:key ["2" "3"]} "Outcome 3"]
-   [menu-item {:key ["2" "4"]} "Outcome 4"]])
-
 
 (defn load-projects []
   (data/load))
@@ -179,50 +159,9 @@
      [:h4 "Technical error details reported:"]]
     (mapv #(vector :h5 (str (select-keys (last %) [:status :body :trace-redirects] ))) @data/api-error))])
 
-(defn switch-menu []
-  [:div {:class "ant-menu-horizontal"
-         :style {:float "right"}}
-   [:div {:style {:marginRight "10px"}}
-    [:span  "Percentages"]
-    [switch/switch
-     {:checked (-> @view-db :switches :percentages?)
-      :style {:marginRight "30px"
-              :marginLeft "10px"}
-      :on-change #(swap! view-db update-in [:switches :percentages?] not (js->clj %))
-      :size "small"}]
-    [:span  "Contributors"]
-    [switch/switch
-     {:checked (-> @view-db :switches :disaggregated?)
-      :style {:marginLeft "10px"}
-      :on-change #(swap! view-db update-in [:switches :disaggregated?] not (js->clj %))
-      :size "small"}]
-    ]])
 
 (defn impacts
-  ([]
-   (util/track-page-view "results")
-   (if (seq @data/api-error)
-     (api-error)
-     (when (and (seq (get @data/db data/main-project))
-                (= 5 (count @data/partners)))
-       [:div
-        (switch-menu)
-        [row (grid-opts {:span 24} {} "cyan")
-         [col (grid-opts {:span 24} {} "yellow")
-          (impacts-menu)]]
-        [row
-         (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
-               (let [option-selected (-> @view-db :menu :option-selected)
-                     outcome-selected (second (split option-selected #","))]
-                 (impacts []
-                          (filter #(and (= (first option-selected)  (:type %))
-                                        (or (nil? outcome-selected)
-                                            (= (util/to-int outcome-selected)
-                                               (data/outcome-level (:title %)))))
-                                  (get @data/db data/main-project))
-                          @data/partners
-                          (:switches @view-db))))]])))
-  ([_ app-state] ;; ui2
+  ([_ app-state]
    (util/track-page-view "results")
    (if (seq @data/api-error)
      (api-error)
