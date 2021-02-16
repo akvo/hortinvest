@@ -14,6 +14,9 @@
 (def data-date-formatter (formatter "yyyy-MM-dd"))
 (def view-date-formatter (formatter "dd MMM yyyy"))
 
+(defn load-projects []
+  (data/load))
+
 (defn format-date [s]
   (let [d (parse data-date-formatter s)]
     (upper-case (unparse view-date-formatter d))))
@@ -33,14 +36,6 @@
                        :style {:margin-left 8
                                :whiteSpace "nowrap"}}
       (str percent "%")])])
-
-(defn menu-change [view-db event]
-  (let [{:strs [key]} (js->clj event)]
-    (when (not= key (-> @view-db :menu :option-selected))
-      (swap! view-db assoc-in [:menu :option-selected] key))))
-
-(defn load-projects []
-  (data/load))
 
 (defn int-comma
   "http://clojurescriptmadeeasy.com/blog/how-to-humanize-text-cl-format.html"
