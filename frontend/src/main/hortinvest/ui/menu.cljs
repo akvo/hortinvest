@@ -38,7 +38,6 @@
    [:a {:href (rfe/href :outcome {:id id})} title]])
 
 (defn results-menu [app-state]
-  (i/load-projects)
   (let [state @app-state
         outcome-configs (-> state :config :results :outcomes)]
     [:div

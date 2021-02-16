@@ -161,8 +161,7 @@
    (util/track-page-view "results")
    (if (seq @data/api-error)
      (api-error)
-     (when (and (seq (get @data/db config/main-project))
-                (= 5 (count @data/partners)))
+     (when (data/loaded?)
        [:div
         [row
          (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]

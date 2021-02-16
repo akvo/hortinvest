@@ -67,6 +67,10 @@
         (load-partners)
         (recur)))))
 
+(defn loaded? []
+  (and (seq (get @db main-project))
+       (= 5 (count @partners))))
+
 (defn load
   ([]
    (doall (map load project-ids)))

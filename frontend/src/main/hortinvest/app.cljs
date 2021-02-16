@@ -6,13 +6,12 @@
    [hortinvest.config :as config]
    [hortinvest.util :as util]
    [hortinvest.ui :as ui]
+   [hortinvest.ui.impacts-data :as impacts-data]
    [hortinvest.routes :as routes]
    [reagent.core :as r]
    [reagent.dom :as rdom]
    [reitit.frontend :as rf]
    [reitit.frontend.easy :as rfe]))
-
-
 
 (defonce app-state
   (r/atom {:config config/config
@@ -25,6 +24,7 @@
     (Sentry/init (clj->js {:dsn "https://74a424e902fa437ab1a424ac2391ce07@o65834.ingest.sentry.io/5632052"
                            :integrations [(new (. Integrations -BrowserTracing))]
                            :tracesSampleRate 1.0})))
+  (impacts-data/load)
   (rfe/start!
    (rf/router routes/routes {:conflicts nil
                              :data {:config config/config}})
