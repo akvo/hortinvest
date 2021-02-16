@@ -67,9 +67,13 @@
         (load-partners)
         (recur)))))
 
+(defn loaded? []
+  (and (seq (get @db main-project))
+       (= 5 (count @partners))))
+
 (defn load
   ([]
-   (doall (map load project-ids)))
+   (when-not (loaded?) (doall (map load project-ids))))
   ([project-data]
    (go (let [read-chan (fn [c]
                          (go (let [data (<! c)]
