@@ -162,7 +162,7 @@
    (if (seq @data/api-error)
      (api-error)
      (when (data/loaded?)
-       [:div
+       [:div {:style {:padding "20px 0"}}
         [row
          (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
                (impacts []
