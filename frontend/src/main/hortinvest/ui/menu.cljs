@@ -1,6 +1,5 @@
 (ns hortinvest.ui.menu
   (:require
-   [hortinvest.ui.impacts :as i]
    [reitit.frontend.easy :as rfe]
    [syn-antd.layout :refer [layout-header]]
    [syn-antd.menu :refer [menu menu-item]]
