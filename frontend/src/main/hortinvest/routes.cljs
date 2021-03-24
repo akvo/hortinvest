@@ -6,7 +6,7 @@
 
 (def routes
   [["/" {:name :root :view ui/root-page}]
-   ["/projects"
+   ["/intervention-areas"
     ["" {:name :project-list :view ui/project-list-page}]
     ["/:id" {:name :project :view ui/project-page}]]
    ["/results"

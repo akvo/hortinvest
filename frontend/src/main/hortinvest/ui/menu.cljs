@@ -8,19 +8,19 @@
 
 (defn header-top-menu [app-state]
   (let [path (-> @app-state :route-match :path)
-        selected-key (if (.startsWith path "/projects")
-                       "/projects"
+        selected-key (if (.startsWith path "/intervention-areas")
+                       "/intervention-areas"
                        "/results")]
     [menu {:mode "horizontal"
            :selectedKeys [selected-key]
            :theme "light"}
      [menu-item {:key "/results"}
       [:a {:href (rfe/href :impact)} "Results"]]
-     [menu-item {:key "/projects"}
-      [:a {:href (rfe/href :project-list)} "Projects"]]]))
+     [menu-item {:key "/intervention-areas"}
+      [:a {:href (rfe/href :project-list)} "Intervention Areas"]]]))
 
 (defn project-menu-item [{:keys [id title]}]
-  [menu-item {:key (str "/projects/" id)}
+  [menu-item {:key (str "/intervention-areas/" id)}
    [:a {:href (rfe/href :project {:id id})} title]])
 
 (defn projects-menu [app-state]
@@ -73,7 +73,7 @@
   (let [state @app-state
         path (-> state :route-match :path)]
     (cond
-      (.startsWith path "/projects") (projects-menu app-state)
+      (.startsWith path "/intervention-areas") (projects-menu app-state)
       (.startsWith path "/results") (results-menu app-state))))
 
 (defn header [app-state]
