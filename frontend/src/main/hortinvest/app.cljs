@@ -16,7 +16,8 @@
 (defonce app-state
   (r/atom {:config config/config
            :route-match nil
-           :switches {:disaggregated? false}}))
+           :switches {:percentages? true
+                      :disaggregated? false}}))
 
 (defn init []
   (when-not (includes? util/host "localhost")
