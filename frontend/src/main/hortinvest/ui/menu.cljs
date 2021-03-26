@@ -45,13 +45,6 @@
                     :lineHeight "32px"
                     :borderBottom "0"}}
       [:div {:style {:marginRight "10px"}}
-       [:span  "Percentages"]
-       [switch/switch
-        {:checked (-> @app-state :switches :percentages?)
-         :style {:marginRight "30px"
-                 :marginLeft "10px"}
-         :on-change #(swap! app-state update-in [:switches :percentages?] not (js->clj %))
-         :size "small"}]
        [:span  "Contributors"]
        [switch/switch
         {:checked (-> @app-state :switches :disaggregated?)
