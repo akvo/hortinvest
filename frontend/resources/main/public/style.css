@@ -1,6 +1,7 @@
 .container {
   width: 1440px;
   margin: auto;
+  min-height: 800px;
 }
 
 .logo {
@@ -19,4 +20,9 @@
 
 .site-layout .site-layout-background {
   background: #fff;
+  min-height: 800px;
+}
+
+h3 {
+  color: #BFBFBF;
 }
