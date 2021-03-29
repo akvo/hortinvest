@@ -174,16 +174,14 @@
   ([container topics partners-data switches]
    (reduce
     (fn [c impact]
-      (let [res [[row (grid-opts {:key (str (str "impact-div-1-" (:id impact))) } {:margin "20px"} "orange")
-                  [col (grid-opts {:span 24 :key (str (str "impact-div-1-" (:id impact))) } {} "orange")
-                   [:h3 (:title impact)]]
-                  ]
-                 [row (grid-opts {:span 24 :key (str (str "impact-div-" (:id impact))) } {:margin "20px"} "black")
-                  (into [col (grid-opts {:span 24 :key (str (str "impact-col-" (:id impact))) } {} "black")]
+      (let [res [[row (grid-opts {:key (str "impact-div-1-" (:id impact))} {:margin "20px"} "orange")
+                  [col (grid-opts {:span 24 :key (str "impact-div-1-" (:id impact)) } {} "orange")
+                   [:h3 (:title impact)]]]
+                 [row (grid-opts {:span 24 :key (str "impact-div-" (:id impact)) } {:margin "20px"} "black")
+                  (into [col (grid-opts {:span 24 :key (str "impact-col-" (:id impact)) } {} "black")]
                         (into (let [i (find-indicator-with-more-periods (:indicators impact))]
                                 [(into [row (grid-opts {} {:width "100%" :margin-bottom "20px"} "orange")]
-                                       (dates [[col (grid-opts {:span 8} {:padding-right "15px"}) ]] i))
-                                 ])
+                                       (dates [[col (grid-opts {:span 8} {:padding-right "15px"}) ]] i))])
                               [(impact-indicators impact partners-data switches)]))]]]
         (if (:outputs impact)
           (impacts (apply conj c res) (:outputs impact) partners-data switches)
