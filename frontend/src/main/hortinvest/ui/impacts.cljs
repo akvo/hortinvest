@@ -10,7 +10,9 @@
    [syn-antd.result :refer  [result]]
    [syn-antd.col :refer [col]]
    [syn-antd.row :refer [row]]
-   [syn-antd.typography :refer [typography-text]]))
+   [syn-antd.tag :refer [tag]]
+   [syn-antd.progress :refer [progress]]
+   [syn-antd.typography :refer [typography-text typography-title]]))
 
 (def data-date-formatter (formatter "yyyy-MM-dd"))
 (def view-date-formatter (formatter "dd MMM yyyy"))
@@ -33,8 +35,7 @@
            opts)
     (gstring/unescapeEntities "&#9679;")]
    (when showInfo
-     [typography-text {:type "secondary"
-                       :style {:margin-left 8
+     [typography-text {:style {:margin-left 8
                                :whiteSpace "nowrap"}}
       (str percent "%")])])
 
@@ -51,9 +52,15 @@
   (let [periods (:periods i)
         empty-cols (- 4 (count periods))
         res (reduce (fn [c p]
-                      (conj c [col (grid-opts {:span 4} {:fontSize "11px" :textAlign "center" :whiteSpace "nowrap"} "black")
-                               (str (format-date (:period_start p)) " - " (format-date (:period_end p)))]))
-                    r periods )]
+                      (conj c [col (grid-opts {:span 4}
+                                              {:fontSize "11px"
+                                               :textAlign "center"
+                                               :whiteSpace "nowrap"}
+                                              "black")
+                               [typography-text {:type "secondary"
+                                                 :style {:whiteSpace "nowrap"}}
+                                (str (format-date (:period_start p)) " - " (format-date (:period_end p)))]]))
+                    r periods)]
     (if (pos? empty-cols)
       (into res (vec (repeat empty-cols [col (grid-opts {:span 4}) ""])))
       res)))
@@ -65,9 +72,9 @@
                       (let [target (period-value (:target_value p))
                             actual (period-value (:actual_value p))
                             percent (util/nan (util/to-int (* (/ actual target) 100)))]
-                        (conj c [col (grid-opts {:span 4}  (when contributors?
-                                                             {:border-bottom "1px solid #EEE"
-                                                              :margin-bottom "10px"}))
+                        (conj c [col (grid-opts {:span 4} (when contributors?
+                                                            {:border-bottom "1px solid #EEE"
+                                                             :margin-bottom "10px"}))
                                  (if contributors?
                                    [row (grid-opts {}  {:font-size "11px"
                                                         :margin-top "10px"}
@@ -75,22 +82,32 @@
                                     [col (grid-opts {:span 12} {:textAlign "right"} "red")
                                      (int-comma actual)]
                                     [col (grid-opts {:span 12})]]
-                                   [row (grid-opts {}  (merge
-                                                        {:font-size "11px"
-                                                         :margin-top "10px"}
-                                                        (when contributors?
-                                                          {:border-bottom "1px solid #EEE"
-                                                           :margin-bottom "10px"})) "green")
+                                   [row (grid-opts {} (merge {:font-size "11px"}
+                                                             (when contributors?
+                                                               {:border-bottom "1px solid #EEE"
+                                                                :margin-bottom "10px"})) "green")
                                     [col (grid-opts {:span 12} {:textAlign "right"} "red")
-                                     (int-comma actual)
+                                     [typography-text {:style {:whiteSpace "nowrap"}}
+                                      (int-comma actual) ]
+                                     [typography-text {:type "secondary"
+                                                       :style {:whiteSpace "nowrap"}}" (actual)"]
                                      [:br]
-                                     (int-comma target)]
+                                     [typography-text {:type "secondary"
+                                                       :style {:whiteSpace "nowrap"}} (str (int-comma target)" (target)")]]
                                     [col (grid-opts {:span 1})]
-                                    [col (grid-opts {:span 11} {:padding "10px"} "blue")
-                                     (when (-> switches :percentages?) [dot {:percent percent :style {:whiteSpace "nowrap"}}])]
-
-
-                                    ])])))
+                                    [col (grid-opts {:span 11} {:padding "0px"} "blue")
+                                     [progress {:type "line"
+                                                :strokeColor {:from "#c3e8b4"
+                                                              :to "#87d068"}
+                                                :strokeWidth 8
+                                                :showInfo false
+                                                :percent percent
+                                                :style {:font-size "12px"}}]
+                                     [:br]
+                                     [typography-text {:style {:margin-left 0
+                                                               :whiteSpace "nowrap"}}
+                                      (str percent "%")]]
+                                    [:br]])])))
                     r periods )]
     (if (pos? empty-cols)
       (into res (vec (repeat empty-cols [col (grid-opts {:span 4} (merge
@@ -103,8 +120,14 @@
 (defn impact-indicators [impact partners-data switches]
   (map-indexed
    (fn [item-id i]
-     (let [res (into [row (grid-opts {:key (str "impact-li" (:id impact) item-id)} {:margin-bottom "20px"} "red")]
-                     (periods [[col (grid-opts {:span 8} {:padding-right "15px"}) (:title i)]] i switches))]
+     (let [res (into [row (grid-opts {:key (str "impact-li" (:id impact) item-id)}
+                                     {:margin-bottom "25px"
+                                      :padding-bottom "5px"
+                                      :border-bottom "1px dashed #eee"}
+                                     "red")]
+                     (periods [[col (grid-opts {:span 8} {:padding-right "15px"})
+                                [typography-text {:type "primary"} (:title i)]]]
+                              i switches))]
        (if-let [pd (and (:disaggregated? switches) (seq (filter (fn [[_ v]]
                                                                   (->>
                                                                    (get v (data/partner-indicator-key impact i))
@@ -114,7 +137,7 @@
                                                                    )) partners-data)))]
          (into res
                [[row (grid-opts {} {:width "100%"})
-                 (into [col (grid-opts {:span 24 })]
+                 (into [col (grid-opts {:span 24})]
                        (reduce
                         (fn [c partner]
                           (let [partner-title (:title (key partner))
@@ -164,7 +187,7 @@
      (when (data/loaded?)
        [:div {:style {:padding "20px 0"}}
         [row
-         (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
+         (into [col (grid-opts {:span 24} "red")]
                (impacts []
                         (filter #(= "3" (:type %))
                                 (get @data/db config/main-project))
@@ -174,14 +197,24 @@
   ([container topics partners-data switches]
    (reduce
     (fn [c impact]
-      (let [res [[row (grid-opts {:key (str "impact-div-1-" (:id impact))} {:margin "20px"} "orange")
+      (let [{:keys [title type]} impact
+            res [[row (grid-opts {:key (str "impact-div-1-" (:id impact))} {:margin "20px"} "orange")
                   [col (grid-opts {:span 24 :key (str "impact-div-1-" (:id impact)) } {} "orange")
-                   [:h3 (:title impact)]]]
+                   [typography-title {:level 5}
+                    (case type
+                      "1" [tag {:color "gold"} "output"]
+                      "2" [tag {:color "volcano"} "outcome"]
+                      "3" [tag {:color "gold"} "impact"])
+                    title]]]
                  [row (grid-opts {:span 24 :key (str "impact-div-" (:id impact)) } {:margin "20px"} "black")
                   (into [col (grid-opts {:span 24 :key (str "impact-col-" (:id impact)) } {} "black")]
                         (into (let [i (find-indicator-with-more-periods (:indicators impact))]
                                 [(into [row (grid-opts {} {:width "100%" :margin-bottom "20px"} "orange")]
-                                       (dates [[col (grid-opts {:span 8} {:padding-right "15px"}) ]] i))])
+                                       (dates [[col (grid-opts {:span 8} {:padding-right "15px"})
+                                                [typography-text {:type "secondary"
+                                                                  :style {:whiteSpace "nowrap"}}
+                                                 "Indicators"]
+                                                ]] i))])
                               [(impact-indicators impact partners-data switches)]))]]]
         (if (:outputs impact)
           (impacts (apply conj c res) (:outputs impact) partners-data switches)
@@ -196,7 +229,7 @@
                (= 5 (count @data/partners)))
       [:div {:style {:padding "20px 0"}}
        [row
-        (into [col (grid-opts {:span 24 :margin "20px"} {} "red")]
+        (into [col (grid-opts {:span 24} {} "red")]
               (let [option-selected (str  "2," (:id path-params))
                     outcome-selected (second (split option-selected #","))]
                 (impacts []
