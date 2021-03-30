@@ -87,13 +87,12 @@
                                                                {:border-bottom "1px solid #EEE"
                                                                 :margin-bottom "10px"})) "green")
                                     [col (grid-opts {:span 12} {:textAlign "right"} "red")
-                                     [typography-text {:style {:whiteSpace "nowrap"}}
-                                      (int-comma actual) ]
-                                     [typography-text {:type "secondary"
-                                                       :style {:whiteSpace "nowrap"}}" (actual)"]
+                                     [typography-text {:style {:whiteSpace "nowrap"
+                                                               :font-size "14px"
+                                                               :font-weight "bold"}}
+                                      (int-comma actual)]
                                      [:br]
-                                     [typography-text {:type "secondary"
-                                                       :style {:whiteSpace "nowrap"}} (str (int-comma target)" (target)")]]
+                                     (int-comma target)]
                                     [col (grid-opts {:span 1})]
                                     [col (grid-opts {:span 11} {:padding "0px"} "blue")
                                      [progress {:type "line"
@@ -102,7 +101,7 @@
                                                 :strokeWidth 8
                                                 :showInfo false
                                                 :percent percent
-                                                :style {:font-size "12px"}}]
+                                                :style {:font-size "14px"}}]
                                      [:br]
                                      [typography-text {:style {:margin-left 0
                                                                :whiteSpace "nowrap"}}
@@ -200,22 +199,16 @@
       (let [{:keys [title type]} impact
             res [[row (grid-opts {:key (str "impact-div-1-" (:id impact))} {:margin "20px"} "orange")
                   [col (grid-opts {:span 24 :key (str "impact-div-1-" (:id impact)) } {} "orange")
-                   [typography-title {:level 5}
-                    (case type
-                      "1" [tag {:color "gold"} "output"]
-                      "2" [tag {:color "volcano"} "outcome"]
-                      "3" [tag {:color "gold"} "impact"])
-                    title]]]
+                   [typography-title {:level 5} title]]]
                  [row (grid-opts {:span 24 :key (str "impact-div-" (:id impact)) } {:margin "20px"} "black")
                   (into [col (grid-opts {:span 24 :key (str "impact-col-" (:id impact)) } {} "black")]
                         (into (let [i (find-indicator-with-more-periods (:indicators impact))]
                                 [(into [row (grid-opts {} {:width "100%" :margin-bottom "20px"} "orange")]
-                                       (dates [[col (grid-opts {:span 8} {:padding-right "15px"})
-                                                [typography-text {:type "secondary"
-                                                                  :style {:whiteSpace "nowrap"}}
-                                                 "Indicators"]
-                                                ]] i))])
-                              [(impact-indicators impact partners-data switches)]))]]]
+                                       (dates [[col (grid-opts {:span 8} {:padding-right "15px"})]] i))])
+                              [(impact-indicators impact partners-data switches)]))]
+                 (when (= type "2")
+                   [row (grid-opts {:span 24} {:margin "20px"})
+                    [col {:span 24} [typography-title {:level 4} "Outputs"]]])]]
         (if (:outputs impact)
           (impacts (apply conj c res) (:outputs impact) partners-data switches)
           (apply conj c res))))
