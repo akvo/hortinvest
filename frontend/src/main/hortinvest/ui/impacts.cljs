@@ -65,7 +65,7 @@
       (into res (vec (repeat empty-cols [col (grid-opts {:span 4}) ""])))
       res)))
 
-(defn periods [r i switches & [contributors?]]
+(defn periods [r i _ & [contributors?]]
   (let [periods (:periods i)
         empty-cols (- 4 (count periods))
         res (reduce (fn [c p]
