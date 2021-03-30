@@ -10,7 +10,6 @@
    [syn-antd.result :refer  [result]]
    [syn-antd.col :refer [col]]
    [syn-antd.row :refer [row]]
-   [syn-antd.tag :refer [tag]]
    [syn-antd.progress :refer [progress]]
    [syn-antd.typography :refer [typography-text typography-title]]))
 
