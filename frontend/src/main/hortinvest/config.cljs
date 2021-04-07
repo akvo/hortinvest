@@ -16,13 +16,13 @@
     :src "https://hortinvest.akvolumen.org/s/aI2UtX3Mhio"
     :title "Cooperatives"}
    {:height "1000"
-    :id "4"
-    :src "https://hortinvest.akvolumen.org/s/yBs6eu3KLzA"
-    :title "SMEs"}
-   {:height "1000"
     :id "5"
     :src "https://hortinvest.akvolumen.org/s/534M4nFv6TE"
     :title "Business cases"}
+   {:height "1000"
+    :id "4"
+    :src "https://hortinvest.akvolumen.org/s/yBs6eu3KLzA"
+    :title "Other SMEs"}
    {:height "1000"
     :id "6"
     :src "https://hortinvest.akvolumen.org/s/2X0tZojm71g"
